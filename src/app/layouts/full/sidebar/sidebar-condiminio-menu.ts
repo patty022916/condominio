@@ -13,7 +13,7 @@ export const navItems: NavItem[] = [
         navCap: 'Administración',
     },
     {
-        displayName: 'Departamentos',
+        displayName: 'Apartamentos',
         iconName: 'message-dots',
         route: '/apartamentos'
     },
@@ -38,7 +38,7 @@ export const navItems: NavItem[] = [
         route: ''
     },
     {
-        displayName: 'Proveedores',
+        displayName: 'Servicios',
         iconName: 'message-dots',
         route: '/proveedores'
     },
@@ -54,7 +54,13 @@ export const navItems: NavItem[] = [
         displayName: 'Pagos',
         iconName: 'message-dots',
         route: '',
-        external: true,
+        external: false,
+    },
+    {
+        displayName: 'Divisas',
+        iconName: 'message-dots',
+        route: '',
+        external: false,
     },
     {
         navCap: 'Finanzas Personales',
