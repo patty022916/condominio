@@ -3,6 +3,7 @@ export class Usuario {
     nombre: string = '';
     email: string = '';
     password: string = '';
+    apellido: string = '';
     confirm_password: string;
     id_rol: number = 0
     telefono: string = ''

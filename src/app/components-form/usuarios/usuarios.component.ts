@@ -30,7 +30,8 @@ export class UsuariosComponent {
   //PAGINADOR
   @ViewChild(MatPaginator) paginator!: MatPaginator
   dialogRef: MatDialogRef<any>;
-
+  hide = true;
+  hide2 = true
   //ARREGLO DE USUAIORS
   usuarios: Usuario[] = []
   cargos: Roles[] = []

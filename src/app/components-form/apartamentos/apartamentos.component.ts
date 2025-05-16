@@ -30,7 +30,6 @@ export class ApartamentosComponent {
    * @memberof ApartamentosComponent
    */
   columnas: string[] = [
-    'id',
     'piso',
     'letra',
     'habitaciones',

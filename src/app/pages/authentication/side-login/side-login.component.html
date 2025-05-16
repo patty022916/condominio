@@ -39,11 +39,19 @@
             <mat-form-field appearance="outline" class="w-100" color="primary">
               <input [(ngModel)]="login.email" matInput />
             </mat-form-field>
-            <!-- password -->
-            <mat-label class="f-s-14 f-w-600 m-b-12 d-block">Contraseña</mat-label>
-            <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input [(ngModel)]="login.password" matInput type="password" />
-            </mat-form-field>
+
+             
+              <!-- Label -->
+              <mat-label class="f-w-600 m-b-8 d-block">Contraseña</mat-label>
+              <!-- Campo con ojito -->
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput [(ngModel)]="login.password" [type]="hide ? 'password' : 'text'" />
+                <button mat-icon-button matSuffix (click)="hide = !hide"
+                  [attr.aria-label]="'Mostrar u ocultar contraseña'" [attr.aria-pressed]="!hide">
+                  <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+              </mat-form-field>
+             
 
             <div class="d-flex align-items-center m-b-12">
               <mat-checkbox color="primary">Recordar contraseña</mat-checkbox>

@@ -19,6 +19,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class AppSideLoginComponent {
   loading: boolean = false
+  hide: boolean = true
   constructor(
     private router: Router,
     private usersService: UsuariosService,

@@ -112,11 +112,18 @@
   <h2 mat-dialog-title>Formulario de Usuarios</h2>
   <mat-dialog-content>
     <div class="row">
-      <div class="col-12">
+      <div class="col-lg-6">
         <!-- input -->
         <mat-label class="f-w-600 m-b-8 d-block">Nombre</mat-label>
         <mat-form-field appearance="outline" class="w-100" color="primary">
           <input [(ngModel)]="usuario.nombre" matInput placeholder="Tu nombre" />
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="f-w-600 m-b-8 d-block">Apellido</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="usuario.apellido" matInput placeholder="Tu apellido" />
         </mat-form-field>
       </div>
 
@@ -150,19 +157,35 @@
       </div>
 
       <div class="col-lg-6">
-        <!-- input -->
+        <!-- Label -->
         <mat-label class="f-w-600 m-b-8 d-block">Contraseña</mat-label>
+
+        <!-- Campo con ojito -->
         <mat-form-field appearance="outline" class="w-100" color="primary">
-          <input [(ngModel)]="usuario.password" matNativeControl type="password" />
+          <input matInput [(ngModel)]="usuario.password" [type]="hide ? 'password' : 'text'" />
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Mostrar u ocultar contraseña'"
+            [attr.aria-pressed]="!hide">
+            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
         </mat-form-field>
       </div>
+
       <div class="col-lg-6">
-        <!-- input -->
-        <mat-label class="f-w-600 m-b-8 d-block">confirmar Contraseña</mat-label>
+        <!-- Label -->
+        <mat-label class="f-w-600 m-b-8 d-block">Confirmar Contraseña</mat-label>
+
+        <!-- Campo con ojito -->
         <mat-form-field appearance="outline" class="w-100" color="primary">
-          <input (blur)="confirmarPassword()" [(ngModel)]="usuario.confirm_password" matNativeControl type="password" />
+          <input matInput [(ngModel)]="usuario.confirm_password" [type]="hide2 ? 'password' : 'text'"
+            (blur)="confirmarPassword()" />
+          <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Mostrar u ocultar contraseña'"
+            [attr.aria-pressed]="!hide2">
+            <mat-icon>{{ hide2 ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
         </mat-form-field>
       </div>
+
+
     </div>
 
   </mat-dialog-content>
