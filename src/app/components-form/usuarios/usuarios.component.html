@@ -3,11 +3,21 @@
 <section class="main-form">
 
 	<mat-card>
+		{{usuario|json}}
 		<mat-card-content>
 			<mat-card-title>Listado de Usuarios</mat-card-title>
 
 			<div class="table-responsive">
-				<table mat-table [dataSource]="usuarios" class="w-100">
+				<!-- Filtrado de la tabla -->
+				<div class="row">
+					<div class="col-lg-6">
+						<!-- input -->
+						<mat-form-field appearance="outline" class="w-100" color="primary">
+							<input (keyup)="filtro($event)" matNativeControl type="search" />
+						</mat-form-field>
+					</div>
+				</div>
+				<table mat-table [dataSource]="dataSource" class="w-100">
 					<!-- Position Column -->
 					<ng-container matColumnDef="id">
 						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
@@ -32,13 +42,13 @@
 						</td>
 					</ng-container>
 
-					<ng-container matColumnDef="correo">
+					<ng-container matColumnDef="email">
 						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
 							Correo
 						</th>
 						<td mat-cell *matCellDef="let usuario" class="p-l-0">
 							<h6 class="f-s-14 f-w-600">
-								{{ usuario.correo }}
+								{{ usuario.email }}
 							</h6>
 						</td>
 					</ng-container>
@@ -66,9 +76,6 @@
 					</ng-container>
 
 
-
-
-
 					<tr mat-header-row *matHeaderRowDef="columnas"></tr>
 					<tr mat-row *matRowDef="let row; columns: columnas"></tr>
 					<!-- Symbol Column -->
@@ -80,11 +87,11 @@
 								<mat-icon>more_vert</mat-icon>
 							</button>
 							<mat-menu #menu="matMenu">
-								<button mat-menu-item>
+								<button (click)="openModal(element)" mat-menu-item>
 									<mat-icon>edit</mat-icon>
 									<span>Editar</span>
 								</button>
-								<button mat-menu-item>
+								<button (click)="eliminar(element.id)" mat-menu-item>
 									<mat-icon>delete</mat-icon>
 									<span>Eliminar</span>
 								</button>
@@ -93,6 +100,9 @@
 					</ng-container>
 
 				</table>
+				<!-- Paginator -->
+				<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+				</mat-paginator>
 			</div>
 		</mat-card-content>
 	</mat-card>
@@ -107,7 +117,7 @@
 				<!-- input -->
 				<mat-label class="f-w-600 m-b-8 d-block">Nombre</mat-label>
 				<mat-form-field appearance="outline" class="w-100" color="primary">
-					<input matInput placeholder="Tu nombre" />
+					<input [(ngModel)]="usuario.nombre" matInput placeholder="Tu nombre" />
 				</mat-form-field>
 			</div>
 
@@ -115,7 +125,7 @@
 				<!-- input -->
 				<mat-label class="f-w-600 m-b-8 d-block">Correo</mat-label>
 				<mat-form-field appearance="outline" class="w-100" color="primary">
-					<input matInput type="email" placeholder="correo@gmail.com" />
+					<input [(ngModel)]="usuario.email" matInput type="email" placeholder="correo@gmail.com" />
 				</mat-form-field>
 			</div>
 
@@ -123,17 +133,17 @@
 				<!-- input -->
 				<mat-label class="f-w-600 m-b-8 d-block">Teléfono</mat-label>
 				<mat-form-field appearance="outline" class="w-100" color="primary">
-					<input matInput type="number" placeholder="04124567856" />
+					<input [(ngModel)]="usuario.telefono" matInput type="text" placeholder="04124567856" />
 				</mat-form-field>
 			</div>
 
 			<div class="col-12">
 				<mat-label class="f-w-600 m-b-8 d-block">Persona</mat-label>
 				<mat-form-field appearance="outline" class="w-100">
-					<mat-select [(value)]="selectedState">
-						@for(option of state; track option.value) {
-						<mat-option [value]="option.value">{{
-							option.viewValue
+					<mat-select [(value)]="usuario.id_rol">
+						@for(option of cargos; track option.id) {
+						<mat-option [value]="option.id">{{
+							option.nombre
 							}}</mat-option>
 						}
 					</mat-select>
@@ -144,14 +154,14 @@
 				<!-- input -->
 				<mat-label class="f-w-600 m-b-8 d-block">Contraseña</mat-label>
 				<mat-form-field appearance="outline" class="w-100" color="primary">
-					<input matNativeControl type="password" />
+					<input  [(ngModel)]="usuario.password" matNativeControl type="password" />
 				</mat-form-field>
 			</div>
 			<div class="col-lg-6">
 				<!-- input -->
-				<mat-label class="f-w-600 m-b-8 d-block">Repetir Contraseña</mat-label>
+				<mat-label class="f-w-600 m-b-8 d-block">confirmar  Contraseña</mat-label>
 				<mat-form-field appearance="outline" class="w-100" color="primary">
-					<input matNativeControl type="password" />
+					<input (blur)="confirmarPassword()" [(ngModel)]="usuario.confirm_password" matNativeControl type="password" />
 				</mat-form-field>
 			</div>
 		</div>
@@ -161,8 +171,10 @@
 		<button (click)="dialogRef.close(this.dialogTemplate);" mat-stroked-button color="error">
 			cancelar
 		</button>
-		<button mat-flat-button color="primary" matBadgeColor="accent">
+		<button (click)="guardar()" mat-flat-button color="primary" matBadgeColor="accent">
 			Guardar
 		</button>
 	</mat-dialog-actions>
 </ng-template>
+
+<app-loading [loading]="loading"></app-loading>
