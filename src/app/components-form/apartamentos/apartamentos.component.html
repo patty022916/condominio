@@ -1,0 +1,116 @@
+<mat-card>
+  <mat-card-content>
+    <mat-card-title>Listado de Apartamentos</mat-card-title>
+    <div class="table-responsive">
+      <!-- Filtrado de la tabla -->
+      <div class="row">
+        <div class="col-lg-6">
+          <!-- input -->
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input (keyup)="filtro($event)" matNativeControl type="search" />
+          </mat-form-field>
+        </div>
+      </div>
+      <table mat-table [dataSource]="dataSource" class="w-100">
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+            <b>id</b>
+          </th>
+          <td mat-cell *matCellDef="let apartamento" class="p-l-0">
+            <h6 class="f-s-14 f-w-800">
+              {{ apartamento.id }}
+            </h6>
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="piso">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+            Piso
+          </th>
+          <td mat-cell *matCellDef="let apartamento" class="p-l-0">
+            <h6 class="f-s-14 f-w-600">
+              {{ apartamento.piso }}
+            </h6>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="letra">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+            Letra
+          </th>
+          <td mat-cell *matCellDef="let apartamento" class="p-l-0">
+            <h6 class="f-s-14 f-w-600">
+              {{ apartamento.letra }}
+            </h6>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="habitaciones">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+            Habitaciones
+          </th>
+          <td mat-cell *matCellDef="let apartamento" class="p-l-0">
+            <h6 class="f-s-14 f-w-600">
+              {{ apartamento.habitaciones }}
+            </h6>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="propietario">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+            Propietario
+          </th>
+          <td mat-cell *matCellDef="let apartamento" class="p-l-0">
+            <h6 class="f-s-14 f-w-600">
+              {{ apartamento.propietario }}
+            </h6>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="inquilino">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+            Inquilino
+          </th>
+          <td mat-cell *matCellDef="let apartamento" class="p-l-0">
+            <h6 class="f-s-14 f-w-600">
+              {{ apartamento.inquilino }}
+            </h6>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="budget">
+          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>edit</mat-icon>
+                <span>Editar</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>delete</mat-icon>
+                <span>Eliminar</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+      </table>
+      <!-- Paginator -->
+      <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+      </mat-paginator>
+    </div>
+
+  </mat-card-content>
+</mat-card>
+
+<app-loading [loading]="loading"></app-loading>

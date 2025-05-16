@@ -15,7 +15,7 @@ export const navItems: NavItem[] = [
     {
         displayName: 'Departamentos',
         iconName: 'message-dots',
-        route: ''
+        route: '/apartamentos'
     },
     {
         displayName: 'Usuarios',
