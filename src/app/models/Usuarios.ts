@@ -9,7 +9,6 @@ export class Usuario {
     cargo: Cargo[] = []
 
 }
-
 export class Cargo {
     id: string = ''
     key: string = ''
@@ -19,7 +18,6 @@ export class Cargo {
     update: string = ''
     delete: string = ''
 }
-
 export class Roles {
     id: number = 0
     nombre: string = ''

@@ -6,10 +6,9 @@
   </button>
 
 
-
   <span class="flex-1-auto"></span>
   <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Notifications">
-    <i-tabler class="d-flex" name="bell" matBadge="1" ></i-tabler>
+    <i-tabler class="d-flex" name="bell" matBadge="1"></i-tabler>
   </button>
 
   <mat-menu #menu="matMenu">
@@ -23,10 +22,16 @@
     target="_blank" class="d-flex justify-content-center bg-success">
     Check Pro Template
   </a> -->
+  <div class="m-l-10" style="display: flex; flex-direction: column; align-items: end;">
+    <span class="m-0 f-s-18">{{user.nombre}}</span>
+    <span class="m-0 f-s-12  f-w-600 text-primary">{{user.cargo}}</span>
+  </div>
+
   <button mat-mini-fab [matMenuTriggerFor]="profilemenu" aria-label="Notifications">
     <img src="/assets/images/profile/user-1.jpg" class="rounded-circle object-cover d-block" width="35" />
   </button>
   <mat-menu #profilemenu="matMenu" class="cardWithShadow topbar-dd">
+
     <button mat-menu-item>
       <mat-icon class="d-flex align-items-center"><i-tabler name="user" class="icon-18 d-flex"></i-tabler></mat-icon>
       Perfil
@@ -41,7 +46,7 @@
     </button>
 
     <div class="p-x-12 m-t-12">
-      <a [routerLink]="['/authentication/login']" mat-stroked-button class="w-100">Salir</a>
+      <a (click)="logout()" mat-stroked-button class="w-100">Salir</a>
     </div>
   </mat-menu>
 </mat-toolbar>

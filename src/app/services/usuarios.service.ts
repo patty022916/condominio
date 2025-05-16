@@ -26,4 +26,8 @@ export class UsuariosService {
   deleteUser(id: number) {
     return this.http.delete<number>(`${environment.host}/users/${id}`);
   }
+
+  authentication(login: { email: string, password: string }) {
+    return this.http.post<Usuario | { original: { error: string } }>(`${environment.host}/users/auth`, login);
+  }
 }

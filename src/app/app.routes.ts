@@ -1,15 +1,18 @@
 import { Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
+  // Rutas protegidas
   {
     path: '',
     component: FullComponent,
+    canActivate: [authGuard],
     children: [
       {
         path: '',
-        redirectTo: '/dashboard',
+        redirectTo: 'dashboard',
         pathMatch: 'full',
       },
       {
@@ -31,6 +34,8 @@ export const routes: Routes = [
       },
     ],
   },
+
+  // Rutas públicas (login, register, etc.)
   {
     path: '',
     component: BlankComponent,
@@ -44,8 +49,10 @@ export const routes: Routes = [
       },
     ],
   },
+
+  // Ruta comodín al final
   {
     path: '**',
-    redirectTo: 'authentication/error',
+    redirectTo: 'dashboard',
   },
 ];

@@ -1,31 +1,50 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { LoadingComponent } from 'src/app/components-form/loading/loading.component';
 import { MaterialModule } from 'src/app/material.module';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ToastService } from 'src/app/services/toast.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-side-login',
-  imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    RouterModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    LoadingComponent
+  ],
   templateUrl: './side-login.component.html',
 })
 export class AppSideLoginComponent {
+  loading: boolean = false
+  constructor(
+    private router: Router,
+    private usersService: UsuariosService,
+    private toastService: ToastService
+  ) { }
 
-  constructor( private router: Router) {}
-
-  form = new FormGroup({
-    uname: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    password: new FormControl('', [Validators.required]),
-  });
-
-  get f() {
-    return this.form.controls;
-  }
+  login: { email: string, password: string } = { email: '', password: '' }
 
   submit() {
-    // console.log(this.form.value);
-    this.router.navigate(['/']);
+    this.loading = true
+    this.usersService.authentication(this.login).subscribe({
+      next: (usuario) => {
+    
+        if ('original' in usuario) {
+          this.loading = false
+          return this.toastService.show(usuario.original.error)
+        }
+        this.loading = false
+        sessionStorage.setItem('user', JSON.stringify(usuario))
+        sessionStorage.setItem('is_logged', "true")
+        this.router.navigate(['dashboard'])
+      },
+      error: (err) => {
+        this.loading = false
+        this.toastService.show(err.error.error)
+      },
+    })
   }
 }

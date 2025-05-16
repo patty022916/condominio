@@ -2,179 +2,178 @@
 
 <section class="main-form">
 
-	<mat-card>
-		{{usuario|json}}
-		<mat-card-content>
-			<mat-card-title>Listado de Usuarios</mat-card-title>
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title>Listado de Usuarios</mat-card-title>
 
-			<div class="table-responsive">
-				<!-- Filtrado de la tabla -->
-				<div class="row">
-					<div class="col-lg-6">
-						<!-- input -->
-						<mat-form-field appearance="outline" class="w-100" color="primary">
-							<input (keyup)="filtro($event)" matNativeControl type="search" />
-						</mat-form-field>
-					</div>
-				</div>
-				<table mat-table [dataSource]="dataSource" class="w-100">
-					<!-- Position Column -->
-					<ng-container matColumnDef="id">
-						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
-							<b>id</b>
-						</th>
-						<td mat-cell *matCellDef="let usuario" class="p-l-0">
-							<h6 class="f-s-14 f-w-800">
-								{{ usuario.id }}
-							</h6>
-						</td>
-					</ng-container>
-
-
-					<ng-container matColumnDef="nombre">
-						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
-							Nombre
-						</th>
-						<td mat-cell *matCellDef="let usuario" class="p-l-0">
-							<h6 class="f-s-14 f-w-600">
-								{{ usuario.nombre }}
-							</h6>
-						</td>
-					</ng-container>
-
-					<ng-container matColumnDef="email">
-						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
-							Correo
-						</th>
-						<td mat-cell *matCellDef="let usuario" class="p-l-0">
-							<h6 class="f-s-14 f-w-600">
-								{{ usuario.email }}
-							</h6>
-						</td>
-					</ng-container>
-
-					<ng-container matColumnDef="telefono">
-						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
-							Teléfono
-						</th>
-						<td mat-cell *matCellDef="let usuario" class="p-l-0">
-							<h6 class="f-s-14 f-w-600">
-								{{ usuario.telefono }}
-							</h6>
-						</td>
-					</ng-container>
-
-					<ng-container matColumnDef="cargo">
-						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
-							Cargo
-						</th>
-						<td mat-cell *matCellDef="let usuario" class="p-l-0">
-							<h6 class="f-s-14 f-w-600">
-								{{ usuario.cargo }}
-							</h6>
-						</td>
-					</ng-container>
+      <div class="table-responsive">
+        <!-- Filtrado de la tabla -->
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- input -->
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input (keyup)="filtro($event)" matNativeControl type="search" />
+            </mat-form-field>
+          </div>
+        </div>
+        <table mat-table [dataSource]="dataSource" class="w-100">
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>id</b>
+            </th>
+            <td mat-cell *matCellDef="let usuario" class="p-l-0">
+              <h6 class="f-s-14 f-w-800">
+                {{ usuario.id }}
+              </h6>
+            </td>
+          </ng-container>
 
 
-					<tr mat-header-row *matHeaderRowDef="columnas"></tr>
-					<tr mat-row *matRowDef="let row; columns: columnas"></tr>
-					<!-- Symbol Column -->
-					<ng-container matColumnDef="budget">
-						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Nombre
+            </th>
+            <td mat-cell *matCellDef="let usuario" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ usuario.nombre }}
+              </h6>
+            </td>
+          </ng-container>
 
-						<td mat-cell *matCellDef="let element">
-							<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-								<mat-icon>more_vert</mat-icon>
-							</button>
-							<mat-menu #menu="matMenu">
-								<button (click)="openModal(element)" mat-menu-item>
-									<mat-icon>edit</mat-icon>
-									<span>Editar</span>
-								</button>
-								<button (click)="eliminar(element.id)" mat-menu-item>
-									<mat-icon>delete</mat-icon>
-									<span>Eliminar</span>
-								</button>
-							</mat-menu>
-						</td>
-					</ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Correo
+            </th>
+            <td mat-cell *matCellDef="let usuario" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ usuario.email }}
+              </h6>
+            </td>
+          </ng-container>
 
-				</table>
-				<!-- Paginator -->
-				<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
-				</mat-paginator>
-			</div>
-		</mat-card-content>
-	</mat-card>
+          <ng-container matColumnDef="telefono">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Teléfono
+            </th>
+            <td mat-cell *matCellDef="let usuario" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ usuario.telefono }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="cargo">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Cargo
+            </th>
+            <td mat-cell *matCellDef="let usuario" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ usuario.cargo }}
+              </h6>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="budget">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button (click)="openModal(element)" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Editar</span>
+                </button>
+                <button (click)="eliminar(element.id)" mat-menu-item>
+                  <mat-icon>delete</mat-icon>
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+        </table>
+        <!-- Paginator -->
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </section>
 
 
 <ng-template #dialogTemplate>
-	<h2 mat-dialog-title>Formulario de Usuarios</h2>
-	<mat-dialog-content>
-		<div class="row">
-			<div class="col-12">
-				<!-- input -->
-				<mat-label class="f-w-600 m-b-8 d-block">Nombre</mat-label>
-				<mat-form-field appearance="outline" class="w-100" color="primary">
-					<input [(ngModel)]="usuario.nombre" matInput placeholder="Tu nombre" />
-				</mat-form-field>
-			</div>
+  <h2 mat-dialog-title>Formulario de Usuarios</h2>
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col-12">
+        <!-- input -->
+        <mat-label class="f-w-600 m-b-8 d-block">Nombre</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="usuario.nombre" matInput placeholder="Tu nombre" />
+        </mat-form-field>
+      </div>
 
-			<div class="col-12">
-				<!-- input -->
-				<mat-label class="f-w-600 m-b-8 d-block">Correo</mat-label>
-				<mat-form-field appearance="outline" class="w-100" color="primary">
-					<input [(ngModel)]="usuario.email" matInput type="email" placeholder="correo@gmail.com" />
-				</mat-form-field>
-			</div>
+      <div class="col-12">
+        <!-- input -->
+        <mat-label class="f-w-600 m-b-8 d-block">Correo</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="usuario.email" matInput type="email" placeholder="correo@gmail.com" />
+        </mat-form-field>
+      </div>
 
-			<div class="col-12">
-				<!-- input -->
-				<mat-label class="f-w-600 m-b-8 d-block">Teléfono</mat-label>
-				<mat-form-field appearance="outline" class="w-100" color="primary">
-					<input [(ngModel)]="usuario.telefono" matInput type="text" placeholder="04124567856" />
-				</mat-form-field>
-			</div>
+      <div class="col-12">
+        <!-- input -->
+        <mat-label class="f-w-600 m-b-8 d-block">Teléfono</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="usuario.telefono" matInput type="text" placeholder="04124567856" />
+        </mat-form-field>
+      </div>
 
-			<div class="col-12">
-				<mat-label class="f-w-600 m-b-8 d-block">Persona</mat-label>
-				<mat-form-field appearance="outline" class="w-100">
-					<mat-select [(value)]="usuario.id_rol">
-						@for(option of cargos; track option.id) {
-						<mat-option [value]="option.id">{{
-							option.nombre
-							}}</mat-option>
-						}
-					</mat-select>
-				</mat-form-field>
-			</div>
+      <div class="col-12">
+        <mat-label class="f-w-600 m-b-8 d-block">Persona</mat-label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-select [(value)]="usuario.id_rol">
+            @for(option of cargos; track option.id) {
+            <mat-option [value]="option.id">{{
+              option.nombre
+              }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-			<div class="col-lg-6">
-				<!-- input -->
-				<mat-label class="f-w-600 m-b-8 d-block">Contraseña</mat-label>
-				<mat-form-field appearance="outline" class="w-100" color="primary">
-					<input  [(ngModel)]="usuario.password" matNativeControl type="password" />
-				</mat-form-field>
-			</div>
-			<div class="col-lg-6">
-				<!-- input -->
-				<mat-label class="f-w-600 m-b-8 d-block">confirmar  Contraseña</mat-label>
-				<mat-form-field appearance="outline" class="w-100" color="primary">
-					<input (blur)="confirmarPassword()" [(ngModel)]="usuario.confirm_password" matNativeControl type="password" />
-				</mat-form-field>
-			</div>
-		</div>
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="f-w-600 m-b-8 d-block">Contraseña</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="usuario.password" matNativeControl type="password" />
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="f-w-600 m-b-8 d-block">confirmar Contraseña</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input (blur)="confirmarPassword()" [(ngModel)]="usuario.confirm_password" matNativeControl type="password" />
+        </mat-form-field>
+      </div>
+    </div>
 
-	</mat-dialog-content>
-	<mat-dialog-actions align="end">
-		<button (click)="dialogRef.close(this.dialogTemplate);" mat-stroked-button color="error">
-			cancelar
-		</button>
-		<button (click)="guardar()" mat-flat-button color="primary" matBadgeColor="accent">
-			Guardar
-		</button>
-	</mat-dialog-actions>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button (click)="dialogRef.close(this.dialogTemplate);" mat-stroked-button color="error">
+      cancelar
+    </button>
+    <button (click)="guardar()" mat-flat-button color="primary" matBadgeColor="accent">
+      Guardar
+    </button>
+  </mat-dialog-actions>
 </ng-template>
 
 <app-loading [loading]="loading"></app-loading>
