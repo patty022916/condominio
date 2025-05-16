@@ -2,7 +2,7 @@ import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
     {
-        navCap: 'Hogar',
+        navCap: 'Edif. Araguaney',
     },
     {
         displayName: 'Estadísticas',
