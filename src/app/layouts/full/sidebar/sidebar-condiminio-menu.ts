@@ -18,6 +18,11 @@ export const navItems: NavItem[] = [
         route: ''
     },
     {
+        displayName: 'Usuarios',
+        iconName: 'message-dots',
+        route: '/usuarios'
+    },
+    {
         displayName: 'Gastos',
         iconName: 'message-dots',
         route: ''
@@ -36,25 +41,6 @@ export const navItems: NavItem[] = [
         displayName: 'Proveedores',
         iconName: 'message-dots',
         route: '/proveedores'
-    },
-    {
-        displayName: 'Residentes',
-        iconName: 'file-invoice',
-        route: '',
-        children: [
-            {
-                displayName: 'Propietarios',
-                iconName: 'point',
-                chipContent: 'PRO',
-                route: '',
-            },
-            {
-                displayName: 'Inquilinos',
-                iconName: 'point',
-                chipContent: 'PRO',
-                route: '',
-            }
-        ],
     },
     {
         navCap: 'Finanzas Generales',
@@ -93,8 +79,8 @@ export const navItems: NavItem[] = [
         iconName: 'message-dots',
         route: '',
         external: true,
-     }, 
-     //{
+    },
+    //{
     //     navCap: 'Ui Components',
     // },
     // {
