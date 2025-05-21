@@ -1,30 +1,29 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { HeaderComponent } from "../../layouts/full/header/header.component";
 import { MaterialModule } from 'src/app/material.module';
-import { ButtonsHeaderComponent } from "../buttons-header/buttons-header.component";
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { CommonModule } from '@angular/common';
-import { Cargo, Roles, Usuario } from 'src/app/models/Usuarios';
-import { UsuariosService } from 'src/app/services/usuarios.service';
 import { LoadingComponent } from '../loading/loading.component';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { ButtonsHeaderComponent } from '../buttons-header/buttons-header.component';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Roles, Usuario } from 'src/app/models/Usuarios';
+import { MatTableDataSource } from '@angular/material/table';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
-  selector: 'app-usuarios',
+  selector: 'app-propietarios-inquilinos',
   imports: [
     MaterialModule,
     LoadingComponent,
     ButtonsHeaderComponent,
     CommonModule,
-    FormsModule],
-  templateUrl: './usuarios.component.html',
-  styleUrl: './usuarios.component.scss'
+    FormsModule
+  ],
+  templateUrl: './propietarios-inquilinos.component.html',
+  styleUrl: './propietarios-inquilinos.component.scss'
 })
-export class UsuariosComponent {
+export class PropietariosInquilinosComponent {
   //CERRARDIGALO
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
   //PAGINADOR
@@ -64,7 +63,7 @@ export class UsuariosComponent {
     this.loading = true
     this.usuariosService.listUsers().subscribe({
       next: (usuarios) => {
-        this.dataSource.data = usuarios.filter(user => user.id_rol != 2 && user.id_rol != 3)
+        this.dataSource.data = usuarios.filter(user => user.id_rol === 2 || user.id_rol === 3)
         this.loading = false
       },
       error: (err) => {
@@ -76,9 +75,10 @@ export class UsuariosComponent {
     this.loading = true
     this.usuariosService.gerCargos().subscribe({
       next: (cargos) => {
-        this.cargos = cargos.filter(cargo => cargo.id != 2 && cargo.id != 3)
+         
+        this.cargos = cargos.filter(cargo => cargo.id == 3 || cargo.id == 2)
         
-        this.usuario.id_rol = cargos[2].id
+        this.usuario.id_rol = cargos[0].id
         this.loading = false
       },
       error: (err) => {
@@ -100,12 +100,14 @@ export class UsuariosComponent {
  * The dialog reference is stored for further operations.
  */
   openModal(element?: Usuario) {
-    if (element) {
+    if (element) {    
+     //!SE TIENE QUE VALIDAR NO CREAR PROPIETARIO
       this.usuario = element
       this.usuario.confirm_password = this.usuario.password
     } else {
+      
       this.usuario = new Usuario()
-      this.usuario.id_rol = this.cargos[2].id
+      this.usuario.id_rol = this.cargos[0].id
     }
 
     this.dialogRef = this.dialog.open(this.dialogTemplate);

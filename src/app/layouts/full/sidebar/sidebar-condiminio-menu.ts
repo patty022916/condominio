@@ -18,9 +18,27 @@ export const navItems: NavItem[] = [
         route: '/apartamentos'
     },
     {
-        displayName: 'Usuarios',
-        iconName: 'message-dots',
-        route: '/usuarios'
+        displayName: 'Miembros',
+        iconName: 'file-invoice',
+        route: '',
+        children: [
+            {
+                displayName: 'Inquilinos/Propietarios',
+                iconName: 'point',
+                route: '/propietarios-inquilinos',
+            },
+            {
+                displayName: 'Asignar Cargos',
+                iconName: 'point',
+                route: '/usuarios',
+            },
+             {
+                displayName: 'Transferencia de Cargo',
+                iconName: 'point',
+                route: '/',
+            },
+
+        ],
     },
     {
         displayName: 'Gastos',
@@ -38,7 +56,7 @@ export const navItems: NavItem[] = [
         route: ''
     },
     {
-        displayName: 'Servicios',
+        displayName: 'Proveedores',
         iconName: 'message-dots',
         route: '/proveedores'
     },
