@@ -7,13 +7,16 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Apartamentos } from 'src/app/models/Apartamentos';
 import { ApartamentosService } from 'src/app/services/apartamentos.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-apartamentos',
   imports: [
     CommonModule,
     MaterialModule,
-    LoadingComponent],
+    LoadingComponent,
+    FormsModule
+  ],
   templateUrl: './apartamentos.component.html',
   styleUrl: './apartamentos.component.scss'
 })
@@ -23,6 +26,8 @@ export class ApartamentosComponent {
 
   apartamentos: Apartamentos[] = []
   dataSource = new MatTableDataSource<Apartamentos>(this.apartamentos);
+
+  columnasFiltro = { piso: true, letra: true, propietario: true, inquilino: true };
   /**
    *Listado de columnas para la tabla
    *
@@ -32,7 +37,6 @@ export class ApartamentosComponent {
   columnas: string[] = [
     'piso',
     'letra',
-    'habitaciones',
     'propietario',
     'inquilino',
     'budget'
@@ -47,6 +51,8 @@ export class ApartamentosComponent {
     this.dataSource.paginator = this.paginator;
   }
   ngOnInit() {
+
+    // Define cómo se debe filtrar dependiendo de la columna activa
     this.loading = true
     this.apartamentosService.listarApartamentos().subscribe({
       next: (apartamentos) => {
@@ -60,9 +66,24 @@ export class ApartamentosComponent {
     })
   }
 
-  filtro(event: Event) {
-    const valor = (event.target as HTMLInputElement).value;
+  /**
+   * Aplica el filtro a la tabla según el check seleccionado
+   *
+   * @param {string} valor
+   * @memberof ApartamentosComponent
+   */
+  aplicarFiltro(valor: string) {
+    const columnasActivas = Object.entries(this.columnasFiltro)
+      .filter(([_, activo]) => activo)
+      .map(([col]) => col);
+
+    this.dataSource.filterPredicate = (dato: any, filtro: string) => {
+      return columnasActivas.some(col => {
+        const contenido = dato[col]?.toString().toLowerCase() || '';
+        return contenido.includes(filtro.toLowerCase());
+      });
+    };
+
     this.dataSource.filter = valor.trim().toLowerCase();
   }
-
 }
