@@ -23,15 +23,29 @@
 @use "pages/auth";
 @import "pages/dashboards";
 
-.shadow{
-    box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12);
+.shadow {
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 
-.main-form{
+.main-form {
     @extend .shadow;
     @extend .rounded;
     @extend .p-15;
-    margin-top:20px ;
-    
+    margin-top: 20px;
+}
+
+
+//TODO COLOCA TODAS LAS CULUMNAS DE LAS TABLAS EN MINUSCULAS  Y CON UN TONO DE AZUL
+thead .mat-mdc-header-row {
+
+    color: var(--mat-sys-primary) !important;
+    text-transform: lowercase;
+
+}
+
+//TODO COLOCA TODOS LOS TH EN UN GROSOR MAS ALTO Y TAMAÑO
+thead .mat-mdc-header-row th {
+    font-size: 16px !important;
+    font-weight: 800 !important;
 }

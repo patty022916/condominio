@@ -4,79 +4,137 @@ import { AppSamplePageComponent } from "../../pages/extra/sample-page/sample-pag
 import { MaterialModule } from 'src/app/material.module';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ProvedoresService } from 'src/app/services/provedores.service';
+import { LoadingComponent } from "../loading/loading.component";
+import { Proveedor } from 'src/app/models/Provedores';
+import { FormsModule } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { ToastService } from 'src/app/services/toast.service';
 
-
-// table 1
-export interface productsData {
-  id: number;
-  imagePath: string;
-  uname: string;
-  budget: number;
-  priority: string;
-}
-
-const PRODUCT_DATA: productsData[] = [
-  {
-    id: 1,
-    imagePath: 'assets/images/products/product-1.png',
-    uname: getRandomName() + ' ' + getRandomLastName(),
-    budget: 180,
-    priority: 'pago',
-  },
-  {
-    id: 2,
-    imagePath: 'assets/images/products/product-2.png',
-    uname: getRandomName() + ' ' + getRandomLastName(),
-    budget: 90,
-    priority: 'deuda',
-  },
-  {
-    id: 3,
-    imagePath: 'assets/images/products/product-3.png',
-    uname: getRandomName() + ' ' + getRandomLastName(),
-    budget: 120,
-    priority: 'deuda',
-  },
-  {
-    id: 4,
-    imagePath: 'assets/images/products/product-4.png',
-    uname: getRandomName() + ' ' + getRandomLastName(),
-    budget: 160,
-    priority: 'pago',
-  },
-];
-
-function getRandomName(): string {
-  const names = ['Ana', 'Juan', 'Luis', 'María', 'Pedro', 'Sofía', 'Carlos', 'Laura', 'Miguel', 'Sandra'];
-  return names[Math.floor(Math.random() * names.length)];
-}
-
-function getRandomLastName(): string {
-  const lastNames = ['García', 'Pérez', 'González', 'Sánchez', 'Martínez', 'Fernández', 'López', 'Rodríguez', 'Díaz', 'Hernández'];
-  return lastNames[Math.floor(Math.random() * lastNames.length)];
-}
 @Component({
   selector: 'app-provider',
   imports: [
     ButtonsHeaderComponent,
     MaterialModule,
-    CommonModule
+    CommonModule,
+    LoadingComponent,
+    FormsModule
   ],
   templateUrl: './provider.component.html',
   styleUrl: './provider.component.scss'
 })
 export class ProviderComponent {
-@ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
+  @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator
 
+  dialogRef: MatDialogRef<any>;
+  columnas: string[] = ['nombre', 'servicio', 'telefono', 'budget'];
+  proveedores: Proveedor[] = [];
+
+  //DATASORUCE DE LA TABLA
+  dataSource = new MatTableDataSource<Proveedor>(this.proveedores);
+  loading: boolean = false
+  provedor: Proveedor = new Proveedor()
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private provedoresService: ProvedoresService,
+    private toastService: ToastService
   ) { }
-  // table 1
-  displayedColumns1: string[] = ['assigned', 'name', 'priority', 'budget'];
-  dataSource1 = PRODUCT_DATA;
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+  ngOnInit(): void {
 
-  openModal() {
-     this.dialog.open(this.dialogTemplate);
+    this.loading = true
+    this.provedoresService.listarProveedores().subscribe({
+      next: (provedores) => {
+        this.dataSource.data = provedores
+        this.loading = false
+      },
+      error: (err) => {
+        this.loading = false
+        this.toastService.show(err.error.error);
+      },
+    })
+  }
+
+  openModal(elemet?: Proveedor) {
+    if (elemet) {
+      this.provedor = elemet
+    } else {
+      this.provedor = new Proveedor()
+    }
+    this.dialogRef = this.dialog.open(this.dialogTemplate);
+  }
+
+  dynamicSupplierCreation() {
+    if (this.provedor.id != 0) {
+      this.updateProviderService()
+    } else {
+      this.createProviderService()
+    }
+  }
+
+  /**
+   *ejecuta el servicio del provedor 
+   *
+   * @memberof ProviderComponent
+   */
+  createProviderService() {
+    this.loading = true
+    this.provedoresService.crearProveedor(this.provedor).subscribe({
+      next: (provedor) => {
+        this.provedor.id = provedor.id
+        this.dataSource.data = [provedor, ...this.dataSource.data];
+        this.toastService.show('Proveedor creado correctamente');
+        this.dialogRef.close();
+        this.loading = false
+        this.loading = false
+      },
+      error: (err) => {
+        this.loading = false
+        this.toastService.show(err.error.error);
+      }
+    })
+  }
+
+  /**
+   *Ejecuta el servicio para la actualizacion del registro
+   *
+   * @memberof ProviderComponent
+   */
+  updateProviderService() {
+    this.loading = true
+    this.provedoresService.actualizarProveedor(this.provedor).subscribe({
+      next: (provedor) => {
+        this.toastService.show('Proveedor actualizado correctamente');
+        this.dialogRef.close();
+        this.loading = false
+      },
+      error: (err) => {
+        this.loading = false
+        this.toastService.show(err.error.error);
+      }
+    })
+  }
+  eliminarProvedor(id:number) {
+    this.loading = true
+    this.provedoresService.eliminarProvedor(id).subscribe({
+      next: () => {
+        this.dataSource.data = this.dataSource.data.filter(user => user.id !== id);
+        this.toastService.show('Proveedor eliminado correctamente');
+        this.loading = false
+      },
+      error: (err) => {
+        this.loading = false
+        this.toastService.show(err.error.error);
+      }
+    })
+  }
+  filtro(event: Event) {
+    const valor = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = valor.trim().toLowerCase();
   }
 }
