@@ -39,7 +39,7 @@ export class UsuariosComponent {
   dataSource = new MatTableDataSource<Usuario>(this.usuarios);
 
   loading: boolean = false
-  columnas: string[] = ['id', 'nombre', 'email', 'telefono', 'cargo', 'budget'];
+  columnas: string[] = ['nombre', 'email', 'telefono', 'cargo', 'budget'];
 
   usuario: Usuario = new Usuario()
 
@@ -77,7 +77,7 @@ export class UsuariosComponent {
     this.usuariosService.gerCargos().subscribe({
       next: (cargos) => {
         this.cargos = cargos.filter(cargo => cargo.id != 2 && cargo.id != 3)
-        
+
         this.usuario.id_rol = cargos[2].id
         this.loading = false
       },
@@ -101,7 +101,7 @@ export class UsuariosComponent {
  */
   openModal(element?: Usuario) {
     if (element) {
-      this.usuario = element
+      this.usuario = { ...element }
       this.usuario.confirm_password = this.usuario.password
     } else {
       this.usuario = new Usuario()
@@ -125,6 +125,8 @@ export class UsuariosComponent {
         if (this.usuario.id == 0) {
           this.usuario.id = user.id
           this.dataSource.data = [user, ...this.dataSource.data];
+        }else{
+          this.dataSource.data = this.dataSource.data.map(u => u.id === user.id ? user : u);
         }
         this.toastService.show('Usuario creado correctamente');
         this.dialogRef.close();
@@ -151,5 +153,9 @@ export class UsuariosComponent {
         this.loading = false
       }
     })
+  }
+  refrescarUsuario() {
+    this.usuario = new Usuario()
+    this.usuario.id_rol = this.cargos[2].id
   }
 }

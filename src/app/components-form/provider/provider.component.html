@@ -111,6 +111,9 @@
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">
+    <button (click)="refrescarProvedor()" mat-stroked-button color="error">
+      refrescar
+    </button>
     <button (click)="dialogRef.close(this.dialogTemplate);" mat-stroked-button color="error">
       cancelar
     </button>

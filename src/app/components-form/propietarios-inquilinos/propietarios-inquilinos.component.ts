@@ -38,7 +38,7 @@ export class PropietariosInquilinosComponent {
   dataSource = new MatTableDataSource<Usuario>(this.usuarios);
 
   loading: boolean = false
-  columnas: string[] = ['id', 'nombre', 'email', 'telefono', 'cargo', 'budget'];
+  columnas: string[] = ['nombre', 'email', 'telefono', 'cargo', 'budget'];
 
   usuario: Usuario = new Usuario()
 
@@ -75,9 +75,9 @@ export class PropietariosInquilinosComponent {
     this.loading = true
     this.usuariosService.gerCargos().subscribe({
       next: (cargos) => {
-         
+
         this.cargos = cargos.filter(cargo => cargo.id == 3 || cargo.id == 2)
-        
+
         this.usuario.id_rol = cargos[0].id
         this.loading = false
       },
@@ -100,12 +100,12 @@ export class PropietariosInquilinosComponent {
  * The dialog reference is stored for further operations.
  */
   openModal(element?: Usuario) {
-    if (element) {    
-     //!SE TIENE QUE VALIDAR NO CREAR PROPIETARIO
-      this.usuario = element
+    if (element) {
+      //!SE TIENE QUE VALIDAR NO CREAR PROPIETARIO
+      this.usuario = { ...element }
       this.usuario.confirm_password = this.usuario.password
     } else {
-      
+
       this.usuario = new Usuario()
       this.usuario.id_rol = this.cargos[0].id
     }
@@ -127,6 +127,8 @@ export class PropietariosInquilinosComponent {
         if (this.usuario.id == 0) {
           this.usuario.id = user.id
           this.dataSource.data = [user, ...this.dataSource.data];
+        } else {
+          this.dataSource.data = this.dataSource.data.map(u => u.id === user.id ? user : u);
         }
         this.toastService.show('Usuario creado correctamente');
         this.dialogRef.close();
@@ -153,5 +155,9 @@ export class PropietariosInquilinosComponent {
         this.loading = false
       }
     })
+  }
+  refrescarPropietario() {
+    this.usuario = new Usuario()
+    this.usuario.id_rol = this.cargos[0].id
   }
 }

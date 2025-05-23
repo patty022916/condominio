@@ -27,7 +27,7 @@ export class ApartamentosComponent {
   apartamentos: Apartamentos[] = []
   dataSource = new MatTableDataSource<Apartamentos>(this.apartamentos);
 
-  columnasFiltro = { piso: true, letra: true, propietario: true, inquilino: true };
+  columnasFiltro = { piso: false, letra: false, propietario: false, inquilino: false };
   /**
    *Listado de columnas para la tabla
    *

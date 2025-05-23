@@ -1,5 +1,114 @@
 <app-buttons-header (addEvent)="openModal()"></app-buttons-header>
 
+
+<section class="main-form">
+
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title>Listado de Gastos </mat-card-title>
+
+      <div class="table-responsive">
+        <!-- Filtrado de la tabla -->
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- input -->
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input (keyup)="filtro($event)" matNativeControl type="search" />
+            </mat-form-field>
+          </div>
+        </div>
+        <table mat-table [dataSource]="dataSource" class="w-100">
+
+
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Descripción
+            </th>
+            <td mat-cell *matCellDef="let gasto" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ gasto.descripcion }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="monto">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Monto
+            </th>
+            <td mat-cell *matCellDef="let gasto" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ gasto.monto+' $' }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              fecha
+            </th>
+            <td mat-cell *matCellDef="let gasto" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ gasto.fecha | date:'dd/MM/yyyy' }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="tipo_gasto">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Tipo de gasto
+            </th>
+            <td mat-cell *matCellDef="let gasto" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ gasto.tipo_gasto | titlecase }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="proveedor">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Proveedor
+            </th>
+            <td mat-cell *matCellDef="let gasto" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ gasto.proveedor }}
+              </h6>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="budget">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button (click)="openModal(element)" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Editar</span>
+                </button>
+                <button  (click)="eliminarGasto(element.id)" mat-menu-item>
+                  <mat-icon>delete</mat-icon>
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+        </table>
+        <!-- Paginator -->
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+
 <ng-template #dialogTemplate>
   <h2 mat-dialog-title>Formulario de Gastos</h2>
   <mat-dialog-content>
@@ -8,40 +117,76 @@
         <!-- input -->
         <mat-label class="f-w-600 m-b-8 d-block">Descripción</mat-label>
         <mat-form-field appearance="outline" class="w-100" color="primary">
-          <input [(ngModel)]="gasto.descripcion" matInput />
+          <input [(ngModel)]="gasto.descripcion" matInput placeholder="ej: Compra de comida" />
         </mat-form-field>
       </div>
 
       <div class="col-lg-6">
         <!-- input -->
-        <mat-label class="f-w-600 m-b-8 d-block">Monto</mat-label>
+        <mat-label class="f-w-600 m-b-8 d-block">Monto ($)</mat-label>
         <mat-form-field appearance="outline" class="w-100" color="primary">
           <input [(ngModel)]="gasto.monto" type="number" matInput />
         </mat-form-field>
       </div>
 
-      <!-- <div class="col-12">
-                <mat-label class="f-w-600 m-b-8 d-block">Persona</mat-label>
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-select [(value)]="usuario.id_rol">
-                        @for(option of cargos; track option.id) {
-                        <mat-option [value]="option.id">{{
-                            option.nombre
-                            }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
+      <div class="col-lg-6">
+        <mat-label class="f-w-600 m-b-8 d-block">Tipo de gasto</mat-label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-select (selectionChange)="validarRecurrencia()" [(value)]="gasto.tipo_gasto">
+            @for(option of tipos_gastos; track option.id) {
+            <mat-option [value]="option.id">{{option.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12">
+        <mat-label class="f-w-600 m-b-8 d-block">Dia de pagos</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="gasto.fecha" matInput [matDatepicker]="picker" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12">
+        <mat-label>Proveedor</mat-label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-select (selectionChange)="seleccionarProvedor($event)" [(value)]="gasto.id_proveedor">
+            <mat-option [value]="null">Ninguno </mat-option>
+            @for(option of proveedores; track option.id) {
+            <mat-option [value]="option.id">{{ option.nombre }}</mat-option>
+
+            }
+          </mat-select>
+
+          <!-- Botón de limpiar -->
+          <button *ngIf="gasto.id_proveedor !== null" mat-icon-button matSuffix aria-label="Limpiar"
+            (click)="gasto.id_proveedor = null">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6">
+        <mat-label class="f-w-600 m-b-8 d-block">Recurrente</mat-label>
+        <mat-checkbox [disabled]="gasto.tipo_gasto == 'extraordinario'" color="primary"
+          [(ngModel)]="gasto.recurrente"></mat-checkbox>
+      </div>
+
 
 
     </div>
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">
+    <button (click)="refrescarGasto()" mat-stroked-button color="warning">
+      refrescar
+    </button>
     <button (click)="dialogRef.close(this.dialogTemplate)" mat-stroked-button color="error">
       cancelar
     </button>
-    <button mat-flat-button color="primary" matBadgeColor="accent">
+    <button (click)="crearGasto()" mat-flat-button color="primary" matBadgeColor="accent">
       Guardar
     </button>
   </mat-dialog-actions>

@@ -17,17 +17,6 @@
 					</div>
 				</div>
 				<table mat-table [dataSource]="dataSource" class="w-100">
-					<!-- Position Column -->
-					<ng-container matColumnDef="id">
-						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
-							<b>id</b>
-						</th>
-						<td mat-cell *matCellDef="let usuario" class="p-l-0">
-							<h6 class="f-s-14 f-w-800">
-								{{ usuario.id }}
-							</h6>
-						</td>
-					</ng-container>
 
 
 					<ng-container matColumnDef="nombre">
@@ -82,7 +71,8 @@
 						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
 
 						<td mat-cell *matCellDef="let element">
-							<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+							<button mat-icon-button [matMenuTriggerFor]="menu"
+								aria-label="Example icon-button with a menu">
 								<mat-icon>more_vert</mat-icon>
 							</button>
 							<mat-menu #menu="matMenu">
@@ -109,7 +99,7 @@
 
 
 <ng-template #dialogTemplate>
-	<h2 mat-dialog-title>Formulario de Usuarios</h2>
+	<h2 mat-dialog-title>Formulario de Propietarios/Inquilinos</h2>
 	<mat-dialog-content>
 		<div class="row">
 			<div class="col-lg-6">
@@ -152,7 +142,7 @@
 
 			<div class="col-12">
 				<mat-label class="f-w-600 m-b-8 d-block">Persona</mat-label>
-				<mat-form-field  appearance="outline" class="w-100">
+				<mat-form-field appearance="outline" class="w-100">
 					<mat-select [disabled]="usuario.id != 0" [(value)]="usuario.id_rol">
 						@for(option of cargos; track option.id) {
 						<mat-option [value]="option.id">{{
@@ -166,6 +156,9 @@
 
 	</mat-dialog-content>
 	<mat-dialog-actions align="end">
+		<button (click)="refrescarPropietario()" mat-stroked-button color="warning">
+			refrescar
+		</button>
 		<button (click)="dialogRef.close(this.dialogTemplate);" mat-stroked-button color="error">
 			cancelar
 		</button>

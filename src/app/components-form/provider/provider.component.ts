@@ -62,7 +62,7 @@ export class ProviderComponent {
 
   openModal(elemet?: Proveedor) {
     if (elemet) {
-      this.provedor = elemet
+      this.provedor = { ...elemet }
     } else {
       this.provedor = new Proveedor()
     }
@@ -109,6 +109,8 @@ export class ProviderComponent {
     this.loading = true
     this.provedoresService.actualizarProveedor(this.provedor).subscribe({
       next: (provedor) => {
+
+        this.dataSource.data = this.dataSource.data.map(p => p.id === this.provedor.id ? this.provedor : p);
         this.toastService.show('Proveedor actualizado correctamente');
         this.dialogRef.close();
         this.loading = false
@@ -119,7 +121,7 @@ export class ProviderComponent {
       }
     })
   }
-  eliminarProvedor(id:number) {
+  eliminarProvedor(id: number) {
     this.loading = true
     this.provedoresService.eliminarProvedor(id).subscribe({
       next: () => {
@@ -136,5 +138,9 @@ export class ProviderComponent {
   filtro(event: Event) {
     const valor = (event.target as HTMLInputElement).value;
     this.dataSource.filter = valor.trim().toLowerCase();
+  }
+
+  refrescarProvedor() {
+    this.provedor = new Proveedor()
   }
 }
