@@ -129,8 +129,11 @@
 				<!-- input -->
 				<mat-label class="f-w-600 m-b-8 d-block">Teléfono</mat-label>
 				<mat-form-field appearance="outline" class="w-100" color="primary">
-					<input [(ngModel)]="usuario.telefono" matInput type="text" placeholder="04124567856" />
+					<input [(ngModel)]="usuario.telefono" matInput type="text" placeholder="ej: 0412..." />
 				</mat-form-field>
+				<div *ngIf="usuario.telefono && !validatePhoneLength()" style="color:red; font-size: 0.9em;">
+					El teléfono debe tener 11 dígitos.
+				</div>
 			</div>
 
 			<div class="col-12">

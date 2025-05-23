@@ -125,7 +125,7 @@ export class UsuariosComponent {
         if (this.usuario.id == 0) {
           this.usuario.id = user.id
           this.dataSource.data = [user, ...this.dataSource.data];
-        }else{
+        } else {
           this.dataSource.data = this.dataSource.data.map(u => u.id === user.id ? user : u);
         }
         this.toastService.show('Usuario creado correctamente');
@@ -157,5 +157,13 @@ export class UsuariosComponent {
   refrescarUsuario() {
     this.usuario = new Usuario()
     this.usuario.id_rol = this.cargos[2].id
+  }
+  
+  validatePhoneLength(): boolean {
+    if (!this.usuario.telefono) return false;
+    // Limpiamos el teléfono para que solo tenga números
+    const telefonoNumeros = this.usuario.telefono.replace(/\D/g, '');
+    // Validar que tenga 11 dígitos (ejemplo para Venezuela)
+    return telefonoNumeros.length === 11;
   }
 }

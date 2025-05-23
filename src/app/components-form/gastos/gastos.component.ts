@@ -166,8 +166,8 @@ export class GastosComponent {
    * @memberof GastosComponent
    */
   seleccionarProvedor(event: MatSelectChange) {
-    this.gasto.proveedor = this.proveedores.find(proveedor => proveedor.id == event.value)?.nombre ?? ''
-
+    this.gasto.proveedor = this.proveedores.find(p => p.id == event.value)?.nombre ?? '';
+    
   }
 
   refrescarGasto() {
@@ -179,7 +179,7 @@ export class GastosComponent {
     this.gastosService.eliminarGasto(id).subscribe({
 
       next: () => {
-       this.dataSource.data = this.dataSource.data.filter(g => g.id !== id);
+        this.dataSource.data = this.dataSource.data.filter(g => g.id !== id);
         this.toastService.show('Gasto eliminado correctamente')
         this.loading = false
       },

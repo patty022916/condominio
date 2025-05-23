@@ -160,4 +160,12 @@ export class PropietariosInquilinosComponent {
     this.usuario = new Usuario()
     this.usuario.id_rol = this.cargos[0].id
   }
+
+  validatePhoneLength(): boolean {
+    if (!this.usuario.telefono) return false;
+    // Limpiamos el teléfono para que solo tenga números
+    const telefonoNumeros = this.usuario.telefono.replace(/\D/g, '');
+    // Validar que tenga 11 dígitos (ejemplo para Venezuela)
+    return telefonoNumeros.length === 11;
+  }
 }

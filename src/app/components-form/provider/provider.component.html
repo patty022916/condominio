@@ -99,19 +99,42 @@
           <input [(ngModel)]="provedor.servicio" matInput />
         </mat-form-field>
       </div>
-      <div class="col-lg-12">
-        <!-- input -->
+      <!-- <div class="col-lg-12">
+        <div class="row">
+          <div class="col-3">
+            <mat-label class="f-w-600 m-b-8 d-block">Código</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-select [(value)]="provedor.cod">
+                @for(codigo of codigos_internacionales; track codigo.code) {
+                <mat-option [value]="codigo.code">{{ codigo.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-9">
+            <mat-label class="f-w-600 m-b-8 d-block">Teléfono</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input [(ngModel)]="provedor.telefono" matInput placeholder="ej: 0412..." />
+            </mat-form-field>
+          </div>
+        </div>
+      </div> -->
+      <div class="col-12">
         <mat-label class="f-w-600 m-b-8 d-block">Teléfono</mat-label>
         <mat-form-field appearance="outline" class="w-100" color="primary">
-          <input [(ngModel)]="provedor.telefono" matInput />
+          <input [(ngModel)]="provedor.telefono" matInput placeholder="ej: 0412..." />
         </mat-form-field>
+        <div *ngIf="provedor.telefono && !validatePhoneLength()" style="color:red; font-size: 0.9em;">
+          El teléfono debe tener 11 dígitos.
+        </div>
       </div>
 
     </div>
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button (click)="refrescarProvedor()" mat-stroked-button color="error">
+    <button (click)="refrescarProvedor()" mat-stroked-button color="warning">
       refrescar
     </button>
     <button (click)="dialogRef.close(this.dialogTemplate);" mat-stroked-button color="error">

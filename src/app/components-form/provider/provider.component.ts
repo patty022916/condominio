@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ToastService } from 'src/app/services/toast.service';
+import { CODIGO_NACIONAL, CODIGO_TELEFONOS, CodigoInternacional } from 'src/app/interfaces/CodigosTelefonos';
 
 @Component({
   selector: 'app-provider',
@@ -27,6 +28,8 @@ import { ToastService } from 'src/app/services/toast.service';
 export class ProviderComponent {
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator
+
+  codigos_internacionales: CodigoInternacional[] = CODIGO_TELEFONOS
 
   dialogRef: MatDialogRef<any>;
   columnas: string[] = ['nombre', 'servicio', 'telefono', 'budget'];
@@ -77,6 +80,13 @@ export class ProviderComponent {
     }
   }
 
+  validatePhoneLength(): boolean {
+    if (!this.provedor.telefono) return false;
+    // Limpiamos el teléfono para que solo tenga números
+    const telefonoNumeros = this.provedor.telefono.replace(/\D/g, '');
+    // Validar que tenga 11 dígitos (ejemplo para Venezuela)
+    return telefonoNumeros.length === 11;
+  }
   /**
    *ejecuta el servicio del provedor 
    *
