@@ -43,7 +43,7 @@ export const navItems: NavItem[] = [
     {
         displayName: 'Gastos',
         iconName: 'message-dots',
-        route: ''
+        route: '/gastos'
     },
     {
         displayName: 'Deudas',

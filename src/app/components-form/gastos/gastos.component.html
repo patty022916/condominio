@@ -1,0 +1,49 @@
+<app-buttons-header (addEvent)="openModal()"></app-buttons-header>
+
+<ng-template #dialogTemplate>
+  <h2 mat-dialog-title>Formulario de Gastos</h2>
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col-12">
+        <!-- input -->
+        <mat-label class="f-w-600 m-b-8 d-block">Descripción</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="gasto.descripcion" matInput />
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="f-w-600 m-b-8 d-block">Monto</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="gasto.monto" type="number" matInput />
+        </mat-form-field>
+      </div>
+
+      <!-- <div class="col-12">
+                <mat-label class="f-w-600 m-b-8 d-block">Persona</mat-label>
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-select [(value)]="usuario.id_rol">
+                        @for(option of cargos; track option.id) {
+                        <mat-option [value]="option.id">{{
+                            option.nombre
+                            }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div> -->
+
+
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button (click)="dialogRef.close(this.dialogTemplate)" mat-stroked-button color="error">
+      cancelar
+    </button>
+    <button mat-flat-button color="primary" matBadgeColor="accent">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+<app-loading [loading]="loading"></app-loading>
