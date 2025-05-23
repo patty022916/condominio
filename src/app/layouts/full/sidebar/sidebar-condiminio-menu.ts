@@ -1,109 +1,109 @@
 import { NavItem } from './nav-item/nav-item';
 
 export const navItems: NavItem[] = [
-    {
-        navCap: 'Analisis',
-    },
-    {
-        displayName: 'Estadísticas',
-        iconName: 'layout-grid-add',
-        route: '/dashboard',
-    },
-    {
-        navCap: 'Administración',
-    },
-    {
-        displayName: 'Apartamentos',
-        iconName: 'message-dots',
-        route: '/apartamentos'
-    },
-    {
-        displayName: 'Miembros',
-        iconName: 'file-invoice',
-        route: '',
-        children: [
-            {
-                displayName: 'Inquilinos/Propietarios',
-                iconName: 'point',
-                route: '/propietarios-inquilinos',
-            },
-            {
-                displayName: 'Asignar Cargos',
-                iconName: 'point',
-                route: '/usuarios',
-            },
-             {
-                displayName: 'Transferencia de Cargo',
-                iconName: 'point',
-                route: '/',
-            },
+  {
+    navCap: 'Analisis',
+  },
+  {
+    displayName: 'Estadísticas',
+    iconName: 'layout-grid-add',
+    route: '/dashboard',
+  },
+  {
+    navCap: 'Administración',
+  },
+  {
+    displayName: 'Apartamentos',
+    iconName: 'home',
+    route: '/apartamentos',
+  },
+  {
+    displayName: 'Miembros',
+    iconName: 'users',
+    route: '',
+    children: [
+      {
+        displayName: 'Inquilinos/Propietarios',
+        iconName: 'user',
+        route: '/propietarios-inquilinos',
+      },
+      {
+        displayName: 'Asignar Cargos',
+        iconName: 'user-check',
+        route: '/usuarios',
+      },
+      {
+        displayName: 'Transferencia de Cargo',
+        iconName: 'repeat',
+        route: '/',
+      },
+    ],
+  },
+  {
+    displayName: 'Gastos',
+    iconName: 'credit-card',
+    route: '/gastos',
+  },
+  {
+    displayName: 'Deudas',
+    iconName: 'file-minus',
+    route: '',
+  },
+  {
+    displayName: 'Notificaciones',
+    iconName: 'bell',
+    route: '',
+  },
+  {
+    displayName: 'Proveedores',
+    iconName: 'truck',
+    route: '/proveedores',
+  },
+  {
+    navCap: 'Finanzas Generales',
+  },
+  {
+    displayName: 'Atrasados',
+    iconName: 'clock',
+    route: '',
+  },
+  {
+    displayName: 'Pagos',
+    iconName: 'wallet',
+    route: '',
+    external: false,
+  },
+  {
+    displayName: 'Divisas',
+    iconName: 'globe',
+    route: '',
+    external: false,
+  },
+  {
+    navCap: 'Finanzas Personales',
+  },
+  {
+    displayName: 'Pagos',
+    iconName: 'wallet',
+    route: '',
+    external: true,
+  },
+  {
+    displayName: 'Deudas',
+    iconName: 'file-minus',
+    route: '',
+    external: true,
+  },
+  {
+    navCap: 'Comunidad',
+  },
+  {
+    displayName: 'Reportes',
+    iconName: 'file-text',
+    route: '',
+    external: true,
+  },
 
-        ],
-    },
-    {
-        displayName: 'Gastos',
-        iconName: 'message-dots',
-        route: '/gastos'
-    },
-    {
-        displayName: 'Deudas',
-        iconName: 'message-dots',
-        route: ''
-    },
-    {
-        displayName: 'Notificaciones',
-        iconName: 'message-dots',
-        route: ''
-    },
-    {
-        displayName: 'Proveedores',
-        iconName: 'message-dots',
-        route: '/proveedores'
-    },
-    {
-        navCap: 'Finanzas Generales',
-    },
-    {
-        displayName: 'Atrasados',
-        iconName: 'message-dots',
-        route: ''
-    },
-    {
-        displayName: 'Pagos',
-        iconName: 'message-dots',
-        route: '',
-        external: false,
-    },
-    {
-        displayName: 'Divisas',
-        iconName: 'message-dots',
-        route: '',
-        external: false,
-    },
-    {
-        navCap: 'Finanzas Personales',
-    },
-    {
-        displayName: 'Pagos',
-        iconName: 'message-dots',
-        route: '',
-        external: true,
-    },
-    {
-        displayName: 'Deudas',
-        iconName: 'message-dots',
-        route: '',
-        external: true,
-    },
-    {
-        navCap: 'Comunidad',
-    },
-    {
-        displayName: 'Reportes',
-        iconName: 'message-dots',
-        route: '',
-        external: true,
-    },
     //{
     //     navCap: 'Ui Components',
     // },
