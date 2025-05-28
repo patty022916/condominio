@@ -8,6 +8,8 @@ export class Usuario {
     id_rol: number = 0
     telefono: string = ''
     cargo: Cargo[] = []
+    piso: string = ""
+    letra: string = ""
 
 }
 export class Cargo {

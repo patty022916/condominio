@@ -1,0 +1,73 @@
+<app-buttons-header (addEvent)="openModal()"></app-buttons-header>
+
+
+<ng-template #dialogTemplate>
+  <h2 mat-dialog-title>Formulario de Notificaciones</h2>
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="f-w-600 m-b-8 d-block">Titulo</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="notificacion.titulo" matInput placeholder="ej: Reunion de condominio" />
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6">
+        <mat-label class="f-w-600 m-b-8 d-block">Tipo</mat-label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-select [(value)]="notificacion.tipo">
+            @for(option of tipos_notificaciones; track option.id) {
+            <mat-option [value]="option.id">{{
+              option.nombre
+              }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="w-100">
+          <input type="text" placeholder="Selecciona un usuario" aria-label="Usuario" matInput
+            [formControl]="search_user" [matAutocomplete]="auto" />
+          <mat-autocomplete   [displayWith]="displayUser"  #auto="matAutocomplete" (optionSelected)="onSelect($event.option.value)">
+            @for (user of copy_usuarios; track user.id) {
+            <mat-option  [value]="user">
+              <div class="d-flex align-items-center justify-content-center gap-2">
+                <span>{{ user.nombre }}</span> /
+                <span class="badge-apartamento">{{ user.piso ? user.piso : 'no asignado' }}</span> /
+                <span class="badge-apartamento">{{ user.letra ? user.letra : 'no asignado' }}</span>
+              </div>
+            </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Mensaje</mat-label>
+          <textarea matInput placeholder="Escribe aquí..." rows="5"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button (click)="refrescarNotificacion()" mat-stroked-button color="warning">
+      refrescar
+    </button>
+    <button (click)="dialogRef.close(this.dialogTemplate);" mat-stroked-button color="error">
+      cancelar
+    </button>
+    <button mat-flat-button color="primary" matBadgeColor="accent">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+
+<app-loading [loading]="loading"></app-loading>
