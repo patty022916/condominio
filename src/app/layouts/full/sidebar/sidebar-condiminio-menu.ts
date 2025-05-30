@@ -18,7 +18,7 @@ export const navItems: NavItem[] = [
     route: '/apartamentos',
   },
   {
-    displayName: 'Miembros',
+    displayName: 'Residentes',
     iconName: 'users',
     route: '',
     children: [
@@ -31,12 +31,7 @@ export const navItems: NavItem[] = [
         displayName: 'Asignar Cargos',
         iconName: 'user-check',
         route: '/usuarios',
-      },
-      {
-        displayName: 'Transferencia de Cargo',
-        iconName: 'repeat',
-        route: '/',
-      },
+      }
     ],
   },
   {
