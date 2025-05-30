@@ -20,19 +20,30 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class AppSideLoginComponent {
   loading: boolean = false
   hide: boolean = true
+  remember_password: boolean = false
+  login: { email: string, password: string } = { email: '', password: '' }
+
   constructor(
     private router: Router,
     private usersService: UsuariosService,
     private toastService: ToastService
   ) { }
 
-  login: { email: string, password: string } = { email: '', password: '' }
+  ngOnInit(): void {
+    const remember = JSON.parse(localStorage.getItem('remember') as string);
 
+    if (remember?.email) {
+      this.remember_password = (remember.email);
+      this.login.email = remember.email;
+      this.login.password = remember.password;
+    }
+
+  }
   submit() {
     this.loading = true
     this.usersService.authentication(this.login).subscribe({
       next: (usuario) => {
-    
+
         if ('original' in usuario) {
           this.loading = false
           return this.toastService.show(usuario.original.error)
@@ -40,6 +51,13 @@ export class AppSideLoginComponent {
         this.loading = false
         sessionStorage.setItem('user', JSON.stringify(usuario))
         sessionStorage.setItem('is_logged', "true")
+
+        //recordar contraseña
+        if (this.remember_password) {
+          localStorage.setItem('remember', JSON.stringify(this.login))
+        } else {
+          localStorage.removeItem('remember')
+        }
         this.router.navigate(['dashboard'])
       },
       error: (err) => {
@@ -48,4 +66,6 @@ export class AppSideLoginComponent {
       },
     })
   }
+
+
 }

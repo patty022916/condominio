@@ -1,9 +1,10 @@
 <app-buttons-header (addEvent)="openModal()"></app-buttons-header>
 
 
+
 <ng-template #dialogTemplate>
   <h2 mat-dialog-title>Formulario de Notificaciones</h2>
-  <mat-dialog-content>
+  <mat-dialog-content class="blue_theme">
     <div class="row">
       <div class="col-lg-6">
         <!-- input -->
@@ -34,9 +35,10 @@
         <mat-form-field appearance="outline" class="w-100">
           <input type="text" placeholder="Selecciona un usuario" aria-label="Usuario" matInput
             [formControl]="search_user" [matAutocomplete]="auto" />
-          <mat-autocomplete   [displayWith]="displayUser"  #auto="matAutocomplete" (optionSelected)="onSelect($event.option.value)">
+          <mat-autocomplete [displayWith]="displayUser" #auto="matAutocomplete"
+            (optionSelected)="onSelect($event.option.value)">
             @for (user of copy_usuarios; track user.id) {
-            <mat-option  [value]="user">
+            <mat-option [value]="user">
               <div class="d-flex align-items-center justify-content-center gap-2">
                 <span>{{ user.nombre }}</span> /
                 <span class="badge-apartamento">{{ user.piso ? user.piso : 'no asignado' }}</span> /
@@ -57,11 +59,11 @@
     </div>
 
   </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button (click)="refrescarNotificacion()" mat-stroked-button color="warning">
+  <mat-dialog-actions class="blue_theme" align="end">
+    <button (click)="refrescarNotificacion()" mat-flat-button class="warning-btn">
       refrescar
     </button>
-    <button (click)="dialogRef.close(this.dialogTemplate);" mat-stroked-button color="error">
+    <button (click)="dialogRef.close(this.dialogTemplate);" mat-flat-button class="danger-btn">
       cancelar
     </button>
     <button mat-flat-button color="primary" matBadgeColor="accent">

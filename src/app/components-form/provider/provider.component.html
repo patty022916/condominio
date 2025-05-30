@@ -83,7 +83,7 @@
 
 <ng-template #dialogTemplate>
   <h2 mat-dialog-title>Formulario de Proveedores</h2>
-  <mat-dialog-content>
+  <mat-dialog-content class="blue_theme">
     <div class="row">
       <div class="col-lg-6">
         <!-- input -->
@@ -133,11 +133,11 @@
     </div>
 
   </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button (click)="refrescarProvedor()" mat-stroked-button color="warning">
+  <mat-dialog-actions class="blue_theme" align="end">
+    <button (click)="refrescarProvedor()" mat-flat-button class="warning-btn">
       refrescar
     </button>
-    <button (click)="dialogRef.close(this.dialogTemplate);" mat-stroked-button color="error">
+    <button (click)="dialogRef.close(this.dialogTemplate);" mat-flat-button class="danger-btn">
       cancelar
     </button>
     <button (click)="dynamicSupplierCreation()" mat-flat-button color="primary" matBadgeColor="accent">

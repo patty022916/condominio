@@ -54,7 +54,7 @@
              
 
             <div class="d-flex align-items-center m-b-12">
-              <mat-checkbox color="primary">Recordar contraseña</mat-checkbox>
+              <mat-checkbox [(ngModel)]="remember_password" color="primary">Recordar contraseña</mat-checkbox>
               <a [routerLink]="['/']" class="text-primary f-w-600 text-decoration-none m-l-auto f-s-14">olvide mi
                 contraseña</a>
             </div>
