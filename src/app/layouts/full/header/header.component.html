@@ -7,13 +7,33 @@
 
 
   <span class="flex-1-auto"></span>
-  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Notifications">
-    <i-tabler class="d-flex" name="bell" matBadge="1"></i-tabler>
+  <button mat-icon-button [matMenuTriggerFor]="menu" (click)="marcarNotificacionesComoLeidas()"
+    aria-label="Notifications" [class]=" filterNotifiersNotLeidas != 0 ?'notification-animate':''">
+    <i-tabler class="d-flex" name="bell" [matBadge]="filterNotifiersNotLeidas"></i-tabler>
   </button>
 
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>Item 1</button>
-    <button mat-menu-item>Item 2</button>
+  <mat-menu #menu="matMenu" class="notifications-menu">
+    <div class="scroll-container">
+      @for (notification of notificaciones; track $index) {
+      <div class="p-10 shadow-sm" style="display: flex; flex-direction: column; gap: 8px;"
+        [ngClass]="'notificacion-' + notification.tipo">
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="f-s-14 f-w-600">
+            {{ notification.titulo }}
+          </span>
+          <button (click)="deleteNotification(notification.id)" mat-icon-button style="font-size: 16px;">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <span class="f-s-12 f-w-400">
+          {{ notification.mensaje }}
+        </span>
+        <span class="f-s-9 f-w-400" style="display: flex; justify-content: end;">
+          {{ notification.created_at | date: 'dd/MM/yyyy, h:mm a' }}
+        </span>
+      </div>
+      }
+    </div>
   </mat-menu>
   <!-- --------------------------------------------------------------- -->
   <!-- profile Dropdown -->

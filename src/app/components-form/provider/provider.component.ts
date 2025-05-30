@@ -100,7 +100,7 @@ export class ProviderComponent {
         this.dataSource.data = [provedor, ...this.dataSource.data];
         this.toastService.show('Proveedor creado correctamente');
         this.dialogRef.close();
-        this.loading = false
+
         this.loading = false
       },
       error: (err) => {

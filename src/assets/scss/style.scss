@@ -27,6 +27,11 @@
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
+.shadow-sm {
+    box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.15),
+        0 2px 3px 0 rgba(0, 0, 0, 0.10),
+        0 1px 5px 0 rgba(0, 0, 0, 0.08);
+}
 
 .main-form {
     @extend .shadow;
@@ -51,9 +56,94 @@ thead .mat-mdc-header-row th {
 }
 
 .warning-btn {
-    background-color: #eb984e !important;
+    background-color: var(--mat-sys-primary) !important;
 }
 
 .danger-btn {
-    background-color: #e74c3c !important;
+    background-color: var(--mat-sys-primary) !important;
+}
+
+.badge-danger {
+    background-color: #f3b6af !important;
+    color: #ff4833 !important;
+    border-radius: 7px;
+    text-align: center;
+    padding: 4px;
+    font-weight: 600;
+
+}
+
+.badge-success {
+    background-color: #b9f6ca !important;
+    color: #3be36a !important;
+    border-radius: 7px;
+    text-align: center;
+    padding: 4px;
+    font-weight: 600;
+}
+
+/*
+Clases de notoficaciones
+*/
+
+.notificacion-cobro {
+    background-color: #e8f5e9;
+    /* verde claro */
+    color: #2e7d32;
+    /* verde oscuro */
+    border-left: 4px solid #66bb6a;
+}
+
+.notificacion-reunion {
+    background-color: #e3f2fd;
+    /* azul claro */
+    color: #1565c0;
+    /* azul fuerte */
+    border-left: 4px solid #42a5f5;
+}
+
+.notificacion-alerta {
+    background-color: #fff3e0;
+    /* naranja claro */
+    color: #ef6c00;
+    /* naranja oscuro */
+    border-left: 4px solid #ffa726;
+}
+
+.notificacion-general {
+    background-color: #f5f5f5;
+    /* gris claro */
+    color: #424242;
+    /* gris oscuro */
+    border-left: 4px solid #bdbdbd;
+}
+
+/* ----------------------------------------------- */
+.notifications-menu .scroll-container {
+    max-height: 300px;
+    /* o el valor que prefieras */
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.notifications-menu .scroll-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+.notifications-menu .scroll-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+@keyframes notificationAnimate {
+  0%, 10%   { transform: translateX(0); }
+  15%       { transform: translateX(-3px); }
+  20%       { transform: translateX(3px); }
+  25%       { transform: translateX(-3px); }
+  30%       { transform: translateX(3px); }
+  35%, 100% { transform: translateX(0); }
+}
+
+.notification-animate {
+  animation: notificationAnimate 1.2s ease-in-out infinite;
 }

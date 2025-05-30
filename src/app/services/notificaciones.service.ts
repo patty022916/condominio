@@ -16,8 +16,24 @@ export class NotificacionesService {
   createNotification(notificacion: NotificationUser) {
     return this.http.post<NotificationUser>(`${environment.host}/notificaciones`, notificacion);
   }
-  
+
   listarNotificaciones(): Observable<NotificationUser[]> {
     return this.http.get<NotificationUser[]>(`${environment.host}/notificaciones`);
+  }
+
+  updateNotification(notificacion: NotificationUser): Observable<NotificationUser> {
+    return this.http.put<NotificationUser>(`${environment.host}/notificaciones/${notificacion.id}`, notificacion);
+  }
+
+  deleteNotification(id: number): Observable<any> {
+    return this.http.delete<any>(`${environment.host}/notificaciones/${id}`);
+  }
+
+  getNotificationsForUser(user_id: number): Observable<NotificationUser[]> {
+    return this.http.get<NotificationUser[]>(`${environment.host}/notificaciones/user/${user_id}`);
+  }
+
+  marcarNotificacionesComoLeidas(notificaciones: NotificationUser[]): Observable<NotificationUser[]> {
+    return this.http.post<NotificationUser[]>(`${environment.host}/notificaciones/marcar-leidas`, notificaciones);
   }
 }

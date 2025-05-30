@@ -1,6 +1,128 @@
 <app-buttons-header (addEvent)="openModal()"></app-buttons-header>
 
+<section class="main-form">
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title>Listado de Notificaciones</mat-card-title>
 
+      <div class="table-responsive">
+        <!-- Filtrado de la tabla -->
+        <div class="row">
+          <div class="col-lg-6">
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input (keyup)="filtro($event)" matNativeControl type="search" />
+            </mat-form-field>
+          </div>
+        </div>
+        <table mat-table [dataSource]="dataSource" class="w-100 ">
+          <!-- Position Column -->
+          <ng-container matColumnDef="titulo">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Titulo</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.titulo }}
+              </h6>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="tipo">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Tipo</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.tipo|titlecase }}
+              </h6>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="leida_at">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Leída</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <p [ngClass]="value.leida_at == null ? 'badge-danger' : 'badge-success'">
+                {{ value.leida_at == null ? 'No leído' : 'Leído' }}
+              </p>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Nombre</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.nombre }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="piso">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Piso</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.piso }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="letra">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>letra</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.letra }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="created_at">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Fecha de envió</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.created_at | date: 'dd/MM/yyyy, h:mm a' }}
+              </h6>
+            </td>
+          </ng-container>
+
+
+
+          <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="budget">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button (click)="openModal(element)" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Editar</span>
+                </button>
+                <button (click)="eliminarNotificacion(element.id)" mat-menu-item>
+                  <mat-icon>delete</mat-icon>
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+        </table>
+        <!-- Paginator -->
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</section>
 
 <ng-template #dialogTemplate>
   <h2 mat-dialog-title>Formulario de Notificaciones</h2>
@@ -35,7 +157,7 @@
         <mat-form-field appearance="outline" class="w-100">
           <input type="text" placeholder="Selecciona un usuario" aria-label="Usuario" matInput
             [formControl]="search_user" [matAutocomplete]="auto" />
-          <mat-autocomplete [displayWith]="displayUser" #auto="matAutocomplete"
+          <mat-autocomplete [displayWith]="(displayUser)" #auto="matAutocomplete"
             (optionSelected)="onSelect($event.option.value)">
             @for (user of copy_usuarios; track user.id) {
             <mat-option [value]="user">
@@ -53,7 +175,7 @@
       <div class="col-12">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>Mensaje</mat-label>
-          <textarea matInput placeholder="Escribe aquí..." rows="5"></textarea>
+          <textarea [(ngModel)]="notificacion.mensaje" matInput placeholder="Escribe aquí..." rows="5"></textarea>
         </mat-form-field>
       </div>
     </div>
@@ -66,7 +188,7 @@
     <button (click)="dialogRef.close(this.dialogTemplate);" mat-flat-button class="danger-btn">
       cancelar
     </button>
-    <button mat-flat-button color="primary" matBadgeColor="accent">
+    <button (click)="dynamicNotificationCreation()" mat-flat-button color="primary" matBadgeColor="accent">
       Guardar
     </button>
   </mat-dialog-actions>
