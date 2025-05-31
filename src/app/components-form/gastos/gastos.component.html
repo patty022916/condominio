@@ -91,7 +91,7 @@
                   <mat-icon>edit</mat-icon>
                   <span>Editar</span>
                 </button>
-                <button  (click)="eliminarGasto(element.id)" mat-menu-item>
+                <button (click)="eliminarGasto(element.id)" mat-menu-item>
                   <mat-icon>delete</mat-icon>
                   <span>Eliminar</span>
                 </button>
@@ -168,19 +168,19 @@
         </mat-form-field>
       </div>
 
-      <div class="col-lg-6">
+      <!-- <div class="col-lg-6">
         <mat-label class="f-w-600 m-b-8 d-block">Recurrente</mat-label>
         <mat-checkbox [disabled]="gasto.tipo_gasto == 'extraordinario'" color="primary"
           [(ngModel)]="gasto.recurrente"></mat-checkbox>
-      </div>
+      </div> -->
 
 
 
     </div>
 
-  </mat-dialog-content >
+  </mat-dialog-content>
   <mat-dialog-actions class="blue_theme" align="end">
-    <button (click)="refrescarGasto()"  mat-flat-button class="warning-btn">
+    <button (click)="refrescarGasto()" mat-flat-button class="warning-btn">
       refrescar
     </button>
     <button (click)="dialogRef.close(this.dialogTemplate)" mat-flat-button class="danger-btn">

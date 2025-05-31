@@ -6,6 +6,7 @@ import { ApartamentosComponent } from '../components-form/apartamentos/apartamen
 import { PropietariosInquilinosComponent } from '../components-form/propietarios-inquilinos/propietarios-inquilinos.component';
 import { GastosComponent } from '../components-form/gastos/gastos.component';
 import { NotificacionesComponent } from '../components-form/notificaciones/notificaciones.component';
+import { CoutasComponent } from '../components-form/coutas/coutas.component';
 
 export const PagesRoutes: Routes = [
   { path: 'dashboard', component: StarterComponent },
@@ -14,5 +15,6 @@ export const PagesRoutes: Routes = [
   { path: 'apartamentos', component: ApartamentosComponent },
   { path: 'propietarios-inquilinos', component: PropietariosInquilinosComponent },
   { path: 'gastos', component: GastosComponent },
-  { path: 'notificaciones', component: NotificacionesComponent }
+  { path: 'notificaciones', component: NotificacionesComponent },
+  { path: 'cuotas', component: CoutasComponent }
 ];

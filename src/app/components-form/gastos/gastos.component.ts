@@ -103,7 +103,8 @@ export class GastosComponent {
 
   openModal(element?: Gasto) {
     if (element) {
-      this.gasto = Object.assign({}, element)
+      this.gasto = { ...element }
+      this.gasto.fecha = new Date(this.gasto.fecha)
     } else {
       this.gasto = new Gasto()
 
