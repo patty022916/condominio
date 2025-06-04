@@ -105,13 +105,15 @@ export class CoutasComponent {
 
     this.cuotasService.generarCuotaPorFecha(fecha_formate).subscribe({
       next: (cuota) => {
+        console.log(cuota);
         // ya que el servicio on retorna el id  lo guardamos por la referencia de la tabla 
         this.cuota = { ...cuota, id: this.cuota.id }
 
         this.loadingModal = false
       }, error: (err) => {
-        this.loadingModal = false;
+        this.cuota = new Cuota()
         this.toastService.show(err.error.error);
+        this.loadingModal = false;
       }
     })
   }

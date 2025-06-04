@@ -15,6 +15,7 @@ import { AppNavItemComponent } from './sidebar/nav-item/nav-item.component';
 import { navItems } from './sidebar/sidebar-condiminio-menu';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AppTopstripComponent } from "./top-strip/topstrip.component";
+import { Cargo } from 'src/app/models/Usuarios';
 
 
 const MOBILE_VIEW = 'screen and (max-width: 768px)';
@@ -32,7 +33,7 @@ const TABLET_VIEW = 'screen and (min-width: 769px) and (max-width: 1024px)';
     NgScrollbarModule,
     TablerIconsModule,
     HeaderComponent
-],
+  ],
   templateUrl: './full.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
@@ -60,7 +61,7 @@ export class FullComponent implements OnInit {
   constructor(
     private settings: CoreService,
     private router: Router,
-    private breakpointObserver: BreakpointObserver,
+    private breakpointObserver: BreakpointObserver
   ) {
     this.htmlElement = document.querySelector('html')!;
     this.layoutChangesSubscription = this.breakpointObserver
@@ -85,7 +86,10 @@ export class FullComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    let modulos: Cargo[] = JSON.parse(sessionStorage.getItem('user') || '{}').permisos;
+    console.log(modulos);
+  }
 
   ngOnDestroy() {
     this.layoutChangesSubscription.unsubscribe();
