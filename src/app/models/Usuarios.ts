@@ -16,10 +16,10 @@ export class Cargo {
     id: string = ''
     key: string = ''
     name: string = ''
-    view: string = ''
-    create: string = ''
-    update: string = ''
-    delete: string = ''
+    view: boolean = false
+    create: boolean = false
+    update: boolean = false
+    delete: boolean = false
 }
 export class Roles {
     id: number = 0

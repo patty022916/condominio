@@ -87,8 +87,16 @@ export class FullComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    //** permisos en los modulos de servidor a cliente **//
     let modulos: Cargo[] = JSON.parse(sessionStorage.getItem('user') || '{}').permisos;
-    console.log(modulos);
+    this.navItems.map((nav_item) => {
+      let m = modulos.find((m) => m.key == nav_item.key_module);
+      nav_item.view = m!.view;
+      nav_item.children?.map((child) => child.view = m!.view)
+    })
+
+
   }
 
   ngOnDestroy() {

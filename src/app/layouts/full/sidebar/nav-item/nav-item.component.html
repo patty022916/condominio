@@ -1,8 +1,8 @@
-@if(item.navCap){
+@if(item.navCap && item.view) {
 <div mat-subheader class="nav-caption">
   {{ item.navCap }}
 </div>
-} @if(!item.navCap && !item.external) {
+} @if(!item.navCap && !item.external  && item.view) {
 <a mat-list-item (click)="onItemSelected(item)" [ngClass]="{
     activeMenu: item.route ? router.isActive(item.route, true) : false,
     expanded: expanded,
@@ -11,7 +11,7 @@
   <i-tabler class="routeIcon" name="{{ item.iconName }}" matListItemIcon></i-tabler>
   <span class="hide-menu">{{ item.displayName }}</span>
   
-  @if(item.children && item.children.length) {
+  @if(item.children && item.children.length  &&item.view) {
   <span class="arrow-icon" fxFlex>
     <span fxFlex></span>
     @if(item.chip) {

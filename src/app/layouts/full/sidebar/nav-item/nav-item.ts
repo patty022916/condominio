@@ -9,4 +9,12 @@ export interface NavItem {
     chipClass?: string;
     external?: boolean;
     view?: boolean;
+    key_module?: KeyModule;
 }
+
+export type KeyModule =
+    'statistics' |
+    'administration' |
+    'general_finances' |
+    'personal_finance' |
+    'community' 

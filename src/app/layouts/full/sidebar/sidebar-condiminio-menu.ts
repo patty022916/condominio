@@ -3,22 +3,28 @@ import { NavItem } from './nav-item/nav-item';
 export const navItems: NavItem[] = [
   {
     navCap: 'Analisis',
+    key_module: 'statistics'
+
   },
   {
     displayName: 'Estadísticas',
     iconName: 'layout-grid-add',
     route: '/dashboard',
+    key_module: 'statistics'
   },
   {
     navCap: 'Administración',
+    key_module: 'administration'
   },
   {
     displayName: 'Apartamentos',
     iconName: 'home',
     route: '/apartamentos',
+    key_module: 'administration'
   },
   {
     displayName: 'Residentes',
+    key_module: 'administration',
     iconName: 'users',
     route: '',
     children: [
@@ -26,11 +32,13 @@ export const navItems: NavItem[] = [
         displayName: 'Inquilinos/Propietarios',
         iconName: 'user',
         route: '/propietarios-inquilinos',
+        key_module: 'administration',
       },
       {
         displayName: 'Asignar Cargos',
         iconName: 'user-check',
         route: '/usuarios',
+        key_module: 'administration',
       }
     ],
   },
@@ -38,65 +46,73 @@ export const navItems: NavItem[] = [
     displayName: 'Gastos',
     iconName: 'credit-card',
     route: '/gastos',
+    key_module: 'administration'
   },
   {
     displayName: 'Cuotas',
     iconName: 'file-text',
     route: '/cuotas',
+    key_module: 'administration'
   },
   {
     displayName: 'Notificaciones',
     iconName: 'bell',
     route: '/notificaciones',
+    key_module: 'administration'
   },
   {
     displayName: 'Proveedores',
     iconName: 'truck',
     route: '/proveedores',
+    key_module: 'administration'
   },
   {
     navCap: 'Finanzas Generales',
+    key_module: 'general_finances'
   },
   {
     displayName: 'Atrasados',
     iconName: 'clock',
     route: '',
+    key_module: 'general_finances'
   },
   {
     displayName: 'Pagos',
     iconName: 'wallet',
     route: '',
-    external: false,
+    key_module: 'general_finances'
   },
   {
     displayName: 'Divisas',
     iconName: 'globe',
     route: '',
-    external: false,
+    key_module: 'general_finances'
   },
   {
     navCap: 'Finanzas Personales',
+    key_module: 'personal_finance'
   },
   {
     displayName: 'Pagos',
     iconName: 'wallet',
     route: '',
-    external: true,
+    key_module: 'personal_finance'
   },
   {
     displayName: 'Deudas',
     iconName: 'file-minus',
     route: '',
-    external: true,
+    key_module: 'personal_finance'
   },
   {
     navCap: 'Comunidad',
+    key_module: 'community'
   },
   {
     displayName: 'Reportes',
     iconName: 'file-text',
     route: '',
-    external: true,
+    key_module: 'community'
   },
 
   // {
