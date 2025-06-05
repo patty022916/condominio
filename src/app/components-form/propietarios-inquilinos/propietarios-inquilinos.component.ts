@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, input, TemplateRef, ViewChild } from '@angular/core';
 import { MaterialModule } from 'src/app/material.module';
 import { LoadingComponent } from '../loading/loading.component';
 import { ButtonsHeaderComponent } from '../buttons-header/buttons-header.component';
@@ -10,6 +10,7 @@ import { Roles, Usuario } from 'src/app/models/Usuarios';
 import { MatTableDataSource } from '@angular/material/table';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { ModeComponent } from 'src/app/interfaces/Forms';
 
 @Component({
   selector: 'app-propietarios-inquilinos',
@@ -24,6 +25,15 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrl: './propietarios-inquilinos.component.scss'
 })
 export class PropietariosInquilinosComponent {
+
+  /**
+   *Modo del componente
+   *
+   * @type {ModeComponent}
+   * @memberof PropietariosInquilinosComponent
+   */
+  @Input() mode_component: ModeComponent = 'form'
+
   //CERRARDIGALO
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
   //PAGINADOR
@@ -38,7 +48,7 @@ export class PropietariosInquilinosComponent {
   dataSource = new MatTableDataSource<Usuario>(this.usuarios);
 
   loading: boolean = false
-  columnas: string[] = ['nombre', 'email', 'telefono', 'cargo', 'budget'];
+  columnas: string[] = ['nombre', 'email', 'telefono', 'cargo'];
 
   usuario: Usuario = new Usuario()
 
@@ -52,6 +62,8 @@ export class PropietariosInquilinosComponent {
     this.dataSource.paginator = this.paginator;
   }
   ngOnInit(): void {
+
+    if (this.mode_component == 'form') this.columnas.push('budget')
 
     //** FILTRO DE TABLA **//
     this.dataSource.filterPredicate = (data: Usuario, filtro: string) => {

@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { MaterialModule } from 'src/app/material.module';
 import { LoadingComponent } from '../loading/loading.component';
 import { ButtonsHeaderComponent } from '../buttons-header/buttons-header.component';
@@ -13,6 +13,7 @@ import { GastosService } from 'src/app/services/gastos.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
+import { ModeComponent } from 'src/app/interfaces/Forms';
 
 @Component({
   selector: 'app-gastos',
@@ -28,6 +29,8 @@ import { MatSelectChange } from '@angular/material/select';
 })
 export class GastosComponent {
 
+  @Input() mode_component: ModeComponent = 'form'
+
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator
   dialogRef: MatDialogRef<any>;
@@ -42,8 +45,7 @@ export class GastosComponent {
     'monto',
     'fecha',
     'tipo_gasto',
-    'proveedor',
-    'budget'
+    'proveedor'
   ];
   tipos_gastos: { id: TypeGasto, name: string }[] = [
     { id: 'fijo', name: 'Fijo' },
@@ -63,6 +65,9 @@ export class GastosComponent {
     this.dataSource.paginator = this.paginator;
   }
   ngOnInit() {
+    if (this.mode_component == 'form')this.columnas.push('budget')
+
+
     this.obtenerProveedores()
     this.obtenerGastos()
   }
@@ -168,7 +173,7 @@ export class GastosComponent {
    */
   seleccionarProvedor(event: MatSelectChange) {
     this.gasto.proveedor = this.proveedores.find(p => p.id == event.value)?.nombre ?? '';
-    
+
   }
 
   refrescarGasto() {

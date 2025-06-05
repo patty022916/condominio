@@ -1,0 +1,25 @@
+<section class="main-form">
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title>Panel de control</mat-card-title>
+      <mat-card-subtitle>{{dateToday| date:'EEEE d \'de\' MMMM \'de\' y' :'' : 'es' }}</mat-card-subtitle>
+
+      <div class="row m-t-20">
+        @for (card of cards_statics; track $index) {
+        <app-card-static class="col-md-4 " [card_static]="card"></app-card-static>
+        }
+      </div>
+
+      <div class="row m-t-10">
+        <div class="col-12">
+          <app-propietarios-inquilinos [mode_component]="'view'"></app-propietarios-inquilinos>
+        </div>
+        <div class="col-12">
+          <app-gastos [mode_component]="'view'"></app-gastos>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<app-loading [loading]="loading"></app-loading>

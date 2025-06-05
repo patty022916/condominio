@@ -1,7 +1,9 @@
+@if (mode_component == 'form') {
 <app-buttons-header (addEvent)="openModal()"></app-buttons-header>
+}
 
 
-<section class="main-form">
+<section [class]="mode_component == 'form' ? 'main-form' : ''">
 
   <mat-card>
     <mat-card-content>
@@ -78,6 +80,7 @@
 
           <tr mat-header-row *matHeaderRowDef="columnas"></tr>
           <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+          @if (mode_component == 'form') {
           <!-- Symbol Column -->
           <ng-container matColumnDef="budget">
             <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
@@ -98,6 +101,7 @@
               </mat-menu>
             </td>
           </ng-container>
+          }
 
         </table>
         <!-- Paginator -->

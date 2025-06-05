@@ -1,0 +1,12 @@
+<div [style.background]="opacityColor(card_static.color)" [style.borderColor]="opacityColor(card_static.color, 0.6)"
+  class="card-static shadow ">
+  <div class="d-flex align-items-center justify-content-between gap-5">
+    <p class="f-s-18 f-w-500 ">{{ card_static.title }}</p>
+    <div class="d-flex align-items-center justify-content-end" style="width: 40px;">
+      <mat-icon [style.color]="card_static.color" style="font-size: 30px; width: auto; height: auto;">
+      {{ card_static.icon}}_outline</mat-icon>
+    </div>
+  </div>
+  <h1 class="f-s-30 f-w-800">{{ card_static.contend }}</h1>
+  <h5 [style.color]="card_static.color">{{ card_static.info }}</h5>
+</div>

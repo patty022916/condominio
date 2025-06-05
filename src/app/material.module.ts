@@ -41,6 +41,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+
+registerLocaleData(localeEs);
 @NgModule({
   declarations: [],
   exports: [
@@ -80,5 +86,6 @@ import { MatTableModule } from '@angular/material/table';
     MatSortModule,
     MatTableModule,
   ],
+  providers: [{ provide: LOCALE_ID, useValue: 'es' }],
 })
 export class MaterialModule {}
