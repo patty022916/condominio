@@ -4,11 +4,13 @@
       <mat-card-title>Panel de control</mat-card-title>
       <mat-card-subtitle>{{dateToday| date:'EEEE d \'de\' MMMM \'de\' y' :'' : 'es' }}</mat-card-subtitle>
 
+      @for (cards of cards_statics; track $index) {
       <div class="row m-t-20">
-        @for (card of cards_statics; track $index) {
+        @for (card of cards; track $index) {
         <app-card-static class="col-md-4 " [card_static]="card"></app-card-static>
         }
       </div>
+      }
 
       <div class="row m-t-10">
         <div class="col-12">

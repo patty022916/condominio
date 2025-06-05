@@ -65,8 +65,9 @@ export class GastosComponent {
     this.dataSource.paginator = this.paginator;
   }
   ngOnInit() {
-    if (this.mode_component == 'form')this.columnas.push('budget')
-
+    if  (this.mode_component == undefined) this.mode_component = 'form';
+    if (this.mode_component == 'form') this.columnas.push('budget')
+     
 
     this.obtenerProveedores()
     this.obtenerGastos()

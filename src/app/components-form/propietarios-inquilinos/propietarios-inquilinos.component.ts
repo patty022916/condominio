@@ -62,7 +62,7 @@ export class PropietariosInquilinosComponent {
     this.dataSource.paginator = this.paginator;
   }
   ngOnInit(): void {
-
+    if (this.mode_component == undefined) this.mode_component = 'form';
     if (this.mode_component == 'form') this.columnas.push('budget')
 
     //** FILTRO DE TABLA **//

@@ -19,7 +19,7 @@ import { GastosComponent } from "../gastos/gastos.component";
     LoadingComponent,
     PropietariosInquilinosComponent,
     GastosComponent
-],
+  ],
   templateUrl: './statics.component.html',
   styleUrl: './statics.component.scss'
 })
@@ -28,37 +28,55 @@ export class StaticsComponent {
   dateToday: Date = new Date();
 
   loading: boolean = false
-  cards_statics: CardStatic[] = [
-    {
-      title: 'Residentes totales',
-      contend: '56',
-      info: '+12% este mes',
-      color: '#f1c40f',
-      icon: 'person'
-    },
-    {
-      title: 'Pagos pendientes',
-      contend: '38',
-      info: '-5% este mes',
-      color: '#e74c3c',
-      icon: 'warning'
-    },
-    {
-      title: 'Solicitudes activas',
-      contend: '10',
-      info: '-3% este mes',
-      color: '#17a589',
-      icon: 'bolt'
-    }
+  cards_statics: CardStatic[][] = [
+    [
+      {
+        title: 'Residentes totales',
+        contend: '56',
+        info: '+12% este mes',
+        color: '#f1c40f',
+        icon: 'person'
+      },
+      {
+        title: 'Pagos pendientes',
+        contend: '38',
+        info: '-5% este mes',
+        color: '#e74c3c',
+        icon: 'warning'
+      },
+      {
+        title: 'Solicitudes activas',
+        contend: '10',
+        info: '-3% este mes',
+        color: '#8e44ad',
+        icon: 'bolt'
+      }
+    ],
+    [
+      {
+        title: 'Fondos USD',
+        contend: '400$',
+        info: '-5% este mes',
+        color: '#27ae60',
+        icon: 'attach_money'
+      },
+      {
+        title: 'Fondos Bs',
+        contend: '4.000bs',
+        info: '+10% este mes',
+        color: '#17a589',
+        icon: 'attach_money'
+      }
+    ]
   ]
   constructor(
     private toastService: ToastService,
     private usersService: UsuariosService
   ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.usersService.listUsers().subscribe(res => {
-      
+
     })
   }
 }
