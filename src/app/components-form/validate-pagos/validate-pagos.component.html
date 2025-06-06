@@ -1,0 +1,126 @@
+<section class="main-form">
+	<mat-card>
+		<mat-card-content>
+			<mat-card-title> Pagos por confirmar </mat-card-title>
+
+			<div class="table-responsive">
+				<!-- Filtrado de la tabla -->
+				<div class="row">
+					<!-- <div class="col-lg-6">
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input (keyup)="filtro($event)" matNativeControl type="search" />
+            </mat-form-field>
+          </div> -->
+				</div>
+				<table mat-table [dataSource]="dataSource" class="w-100 ">
+					<!-- Position Column -->
+					<ng-container matColumnDef="nombre_usuario">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+							<b>Usuario</b>
+						</th>
+						<td mat-cell *matCellDef="let value" class="p-l-0">
+							<h6 class="f-s-14 f-w-500">
+								{{ value.nombre_usuario }}
+							</h6>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="apartamento">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+							<b>Apartamento</b>
+						</th>
+						<td mat-cell *matCellDef="let value" class="p-l-0">
+							<h6 class="f-s-14 f-w-500">
+								{{ value.apartamento }}
+							</h6>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="url">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+							<b>Referencia</b>
+						</th>
+						<td mat-cell *matCellDef="let value" class="p-l-0">
+							<h6 class="f-s-14 f-w-500">
+								{{ value.url }}
+							</h6>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="monto">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+							<b>Monto</b>
+						</th>
+						<td mat-cell *matCellDef="let value" class="p-l-0">
+							<h6 class="f-s-14 f-w-500">
+								{{ value.monto }}
+							</h6>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="forma_pago">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+							<b>Forma de pago</b>
+						</th>
+						<td mat-cell *matCellDef="let value" class="p-l-0">
+							<h6 class="f-s-14 f-w-500">
+								{{ value.forma_pago|titlecase }}
+							</h6>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="status">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+							<b>Estatus</b>
+						</th>
+						<td mat-cell *matCellDef="let value" class="p-l-0">
+							<p [ngClass]="value.status == 'pendiente' ? 'badge-danger' : 'badge-success'">
+								{{ value.status }}
+							</p>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="fecha_pago">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+							<b>Fecha del pago</b>
+						</th>
+						<td mat-cell *matCellDef="let value" class="p-l-0">
+							<h6 class="f-s-14 f-w-500">
+								{{ value.fecha_pago | date: 'dd/MM/yyyy' }}
+							</h6>
+						</td>
+					</ng-container>
+
+
+					<tr mat-header-row *matHeaderRowDef="columnas"></tr>
+					<tr mat-row *matRowDef="let row; columns: columnas"></tr>
+					<!-- Symbol Column -->
+					<ng-container matColumnDef="budget">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+
+						<td mat-cell *matCellDef="let element">
+							<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+								<mat-icon>more_vert</mat-icon>
+							</button>
+							<mat-menu #menu="matMenu">
+								<button mat-menu-item (click)="procesoPago(element,'pagado')">
+									<mat-icon>done</mat-icon>
+									<span>Aprobar</span>
+								</button>
+								<button mat-menu-item (click)="procesoPago(element,'pendiente')">
+									<mat-icon>close</mat-icon>
+									<span>Rechazar</span>
+								</button>
+							</mat-menu>
+						</td>
+					</ng-container>
+
+				</table>
+				<!-- Paginator -->
+				<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+			</div>
+		</mat-card-content>
+	</mat-card>
+</section>
+
+<app-loading [loading]="loading"></app-loading>

@@ -77,9 +77,15 @@ export const navItems: NavItem[] = [
     key_module: 'general_finances'
   },
   {
+    displayName: 'Validar Pagos',
+    iconName: 'check',
+    route: '/validar-pagos',
+    key_module: 'general_finances'
+  },
+  {
     displayName: 'Pagos',
     iconName: 'wallet',
-    route: '',
+    route: '/pagos',
     key_module: 'general_finances'
   },
   {
@@ -95,7 +101,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Pagos',
     iconName: 'wallet',
-    route: '',
+    route: '/pagos-personales',
     key_module: 'personal_finance'
   },
   {

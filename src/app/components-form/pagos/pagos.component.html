@@ -1,1 +1,254 @@
-<p>pagos works!</p>
+<app-buttons-header (addEvent)="openModal()"></app-buttons-header>
+
+
+<section class="main-form">
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title>Listado de Pagos </mat-card-title>
+
+      <div class="table-responsive">
+        <!-- Filtrado de la tabla -->
+        <div class="row">
+          <!-- <div class="col-lg-6">
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input (keyup)="filtro($event)" matNativeControl type="search" />
+            </mat-form-field>
+          </div> -->
+        </div>
+        <table mat-table [dataSource]="dataSource" class="w-100 ">
+          <!-- Position Column -->
+          <ng-container matColumnDef="nombre_usuario">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Usuario</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.nombre_usuario }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="apartamento">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Apartamento</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.apartamento }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="url">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Referencia</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.url }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="monto">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Monto</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.monto }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="forma_pago">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Forma de pago</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.forma_pago|titlecase }}
+              </h6>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Estatus</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <p [ngClass]="value.status == 'pendiente' ? 'badge-danger' : 'badge-success'">
+                {{ value.status }}
+              </p>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fecha_pago">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              <b>Fecha del pago</b>
+            </th>
+            <td mat-cell *matCellDef="let value" class="p-l-0">
+              <h6 class="f-s-14 f-w-500">
+                {{ value.fecha_pago | date: 'dd/MM/yyyy' }}
+              </h6>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="budget">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+
+            <!-- <td mat-cell *matCellDef="let element">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button (click)="openModal(element)" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Editar</span>
+                </button>
+                <button (click)="eliminarProvedor(element.id)" mat-menu-item>
+                  <mat-icon>delete</mat-icon>
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+            </td> -->
+          </ng-container>
+
+        </table>
+        <!-- Paginator -->
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<ng-template #dialogTemplate>
+  <h2 mat-dialog-title>Formulario de Pagos</h2>
+  <mat-dialog-content class="blue_theme">
+
+    @if(mode_component == 'personal'){
+    <div class="row">
+      <h3 class="col-12 m-b-20">Cuota generada del dia <span class="text-primary">{{ cuota.fecha |
+          date:
+          'dd/MM/yyyy'}}</span></h3>
+
+      <!-- Desglose de gastos generales -->
+      <!-- <div class="col-md-4 shadow-sm border-rounded p-16">
+        <div class="d-flex flex-column">
+          <span>Gastos Fijos</span>
+          <span class="f-w-800">{{ cuota.gasto_fijo }}$</span>
+        </div>
+      </div>
+      <div class="col-md-4 shadow-sm border-rounded p-16">
+        <div class="d-flex flex-column align-items-start justify-content-center ">
+          <span>Gastos Comunes</span>
+          <span class="f-w-800">{{ cuota.gasto_comun }}$</span>
+        </div>
+      </div>
+      <div class="col-md-4 shadow-sm border-rounded p-16">
+        <div class="d-flex flex-column">
+          <span class="f-s-12">Gastos Extraordinarios</span>
+          <span class="f-w-800 ">{{ cuota.gasto_extraordinario }}$</span>
+        </div>
+      </div>
+
+      <div class="col-12 shadow-sm border-rounded p-16">
+        <div class="d-flex flex-column">
+          <span>Gastos totales</span>
+          <span class="f-w-800 ">{{ cuota.gasto_total }}$</span>
+        </div>
+      </div> -->
+
+    </div>
+
+
+
+    <!-- Cuotas con apartamentos -->
+    <div class="row m-t-20">
+      <h3 class="col-12 text-primary">Cuotas por apartamentos</h3>
+
+      @for (ap of cuota.cuotas; track $index) {
+
+      <div class="col-3 shadow-sm border-rounded p-16">
+        <div class="d-flex flex-column">
+          <span class="f-s-12">Alícuota aplicada</span>
+          <span class="f-w-800 ">{{ ap.coef_alicuota }}$</span>
+        </div>
+      </div>
+      <div class="col-3 shadow-sm border-rounded p-16">
+        <div class="d-flex flex-column">
+          <span class="f-s-12">Extraordinaria</span>
+          <span class="f-w-800 ">{{ ap.cuota_extraordinaria_usd }}$</span>
+        </div>
+      </div>
+      <div class="col-3 shadow-sm border-rounded p-16">
+        <div class="d-flex flex-column">
+          <span>Fija</span>
+          <span class="f-w-800 ">{{ ap.cuota_fija_usd }}$</span>
+        </div>
+      </div>
+
+      <div class="col-3 shadow-sm border-rounded p-16">
+        <div class="d-flex flex-column">
+          <span>Total</span>
+          <span class="f-w-800 ">{{ ap.total_bs }}Bs</span>
+        </div>
+      </div>
+      }
+
+    </div>
+    }
+
+    <div class="row m-t-20">
+      <div class="col-lg-6">
+        <mat-label class="f-w-600 m-b-8 d-block">Forma de pago</mat-label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-select [disabled]="mode_component == 'general'" (selectionChange)="validarPagoCompleto($event)"
+            [(value)]="pago.forma_pago">
+            @for(option of forma_pago; track option.key) {
+            <mat-option [value]="option.key">{{
+              option.nombre
+              }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6">
+        <mat-label class="f-w-600 m-b-8 d-block">Monto (Bs)</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [disabled]="pago.forma_pago == 'completo' && mode_component == 'personal'" [(ngModel)]="pago.monto"
+            matInput type="number" placeholder="300" />
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <mat-label class="f-w-600 m-b-8 d-block">Referencia</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="pago.url" matInput type="number" placeholder="300" />
+        </mat-form-field>
+      </div>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions class="blue_theme" align="end">
+    <button (click)="refrescarPago()" mat-flat-button class="warning-btn">
+      refrescar
+    </button>
+    <button (click)="dialogRef.close(this.dialogTemplate);" mat-flat-button class="danger-btn">
+      cancelar
+    </button>
+    <button  (click)="guardar()" mat-flat-button color="primary" matBadgeColor="accent">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+
+<app-loading [loading]="loading"></app-loading>

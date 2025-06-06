@@ -10,6 +10,7 @@ export class Usuario {
     cargo: Cargo[] = []
     piso: string = ""
     letra: string = ""
+    id_apartamento: number | null = null
 
 }
 export class Cargo {

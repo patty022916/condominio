@@ -9,6 +9,7 @@ import { LoadingComponent } from "../loading/loading.component";
 import { PropietariosInquilinosComponent } from "../propietarios-inquilinos/propietarios-inquilinos.component";
 import { UsuariosComponent } from "../usuarios/usuarios.component";
 import { GastosComponent } from "../gastos/gastos.component";
+import { ValidatePagosComponent } from "../validate-pagos/validate-pagos.component";
 
 @Component({
   selector: 'app-statics',
@@ -18,8 +19,9 @@ import { GastosComponent } from "../gastos/gastos.component";
     CardStaticComponent,
     LoadingComponent,
     PropietariosInquilinosComponent,
-    GastosComponent
-  ],
+    GastosComponent,
+    ValidatePagosComponent
+],
   templateUrl: './statics.component.html',
   styleUrl: './statics.component.scss'
 })
