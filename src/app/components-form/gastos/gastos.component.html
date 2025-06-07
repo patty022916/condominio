@@ -11,11 +11,29 @@
 
       <div class="table-responsive">
         <!-- Filtrado de la tabla -->
-        <div class="row">
+        <div class="row m-t-20">
           <div class="col-lg-6">
             <!-- input -->
+            <mat-label class="f-w-600 m-b-8 d-block">Filtrar</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
               <input (keyup)="filtro($event)" matNativeControl type="search" />
+            </mat-form-field>
+          </div>
+          <div class="col-3">
+            <mat-label class="f-w-600 m-b-8 d-block">Fecha desde</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput [matDatepicker]="picker1" />
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-3">
+            <mat-label class="f-w-600 m-b-8 d-block">Fecha hasta</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput [matDatepicker]="picker2" />
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
           </div>
         </div>

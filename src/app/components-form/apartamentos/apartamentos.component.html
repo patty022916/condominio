@@ -1,25 +1,28 @@
-<mat-card>
-  <mat-card-content>
-    <mat-card-title>Listado de Apartamentos</mat-card-title>
-    <div class="table-responsive">
-      <!-- Filtrado de la tabla -->
-      <div class="row">
-        <div class="col-lg-6">
-          <mat-form-field appearance="outline" class="w-100">
-            <input matInput #buscar placeholder="Buscar..." (input)="aplicarFiltro(buscar.value)">
-          </mat-form-field>
-        </div>
-        <div class="col-lg-6">
-          <mat-checkbox [(ngModel)]="columnasFiltro.piso">Piso</mat-checkbox>
-          <mat-checkbox [(ngModel)]="columnasFiltro.letra">Letra</mat-checkbox>
-          <mat-checkbox [(ngModel)]="columnasFiltro.propietario">Propietario</mat-checkbox>
-          <mat-checkbox [(ngModel)]="columnasFiltro.inquilino">Inquilino</mat-checkbox>
-        </div>
-      </div>
+<app-buttons-header (addEvent)="openModal()"></app-buttons-header>
 
-      <table mat-table [dataSource]="dataSource" class="w-100">
-        <!-- Position Column -->
-        <!-- <ng-container matColumnDef="id">
+<section class="main-form">
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title>Listado de Apartamentos</mat-card-title>
+      <div class="table-responsive">
+        <!-- Filtrado de la tabla -->
+        <div class="row">
+          <div class="col-lg-6">
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput #buscar placeholder="Buscar..." (input)="aplicarFiltro(buscar.value)">
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6">
+            <mat-checkbox [(ngModel)]="columnasFiltro.piso">Piso</mat-checkbox>
+            <mat-checkbox [(ngModel)]="columnasFiltro.letra">Letra</mat-checkbox>
+            <mat-checkbox [(ngModel)]="columnasFiltro.propietario">Propietario</mat-checkbox>
+            <mat-checkbox [(ngModel)]="columnasFiltro.inquilino">Inquilino</mat-checkbox>
+          </div>
+        </div>
+
+        <table mat-table [dataSource]="dataSource" class="w-100">
+          <!-- Position Column -->
+          <!-- <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
             <b>id</b>
           </th>
@@ -31,82 +34,141 @@
         </ng-container> -->
 
 
-        <ng-container matColumnDef="piso">
-          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
-            Piso
-          </th>
-          <td mat-cell *matCellDef="let apartamento" class="p-l-0">
-            <h6 class="f-s-14 f-w-600">
-              {{ apartamento.piso }}
-            </h6>
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="piso">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Piso
+            </th>
+            <td mat-cell *matCellDef="let apartamento" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ apartamento.piso }}
+              </h6>
+            </td>
+          </ng-container>
 
-        <ng-container matColumnDef="letra">
-          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
-            Letra
-          </th>
-          <td mat-cell *matCellDef="let apartamento" class="p-l-0">
-            <h6 class="f-s-14 f-w-600">
-              {{ apartamento.letra }}
-            </h6>
-          </td>
-        </ng-container>
-
-
-        <ng-container matColumnDef="propietario">
-          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
-            Propietario
-          </th>
-          <td mat-cell *matCellDef="let apartamento" class="p-l-0">
-            <h6 class="f-s-14 f-w-600">
-              {{ apartamento.propietario }}
-            </h6>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="inquilino">
-          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
-            Inquilino
-          </th>
-          <td mat-cell *matCellDef="let apartamento" class="p-l-0">
-            <h6 class="f-s-14 f-w-600">
-              {{ apartamento.inquilino }}
-            </h6>
-          </td>
-        </ng-container>
+          <ng-container matColumnDef="letra">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Letra
+            </th>
+            <td mat-cell *matCellDef="let apartamento" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ apartamento.letra }}
+              </h6>
+            </td>
+          </ng-container>
 
 
-        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnas"></tr>
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="budget">
-          <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+          <ng-container matColumnDef="propietario">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Propietario
+            </th>
+            <td mat-cell *matCellDef="let apartamento" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ apartamento.propietario }}
+              </h6>
+            </td>
+          </ng-container>
 
-          <td mat-cell *matCellDef="let element">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item>
-                <mat-icon>edit</mat-icon>
-                <span>Editar</span>
+          <ng-container matColumnDef="inquilino">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+              Inquilino
+            </th>
+            <td mat-cell *matCellDef="let apartamento" class="p-l-0">
+              <h6 class="f-s-14 f-w-600">
+                {{ apartamento.inquilino }}
+              </h6>
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="budget">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
               </button>
-              <button mat-menu-item>
-                <mat-icon>delete</mat-icon>
-                <span>Eliminar</span>
-              </button>
-            </mat-menu>
-          </td>
-        </ng-container>
+              <mat-menu #menu="matMenu">
+                <button (click)="openModal(element)" mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Editar</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>delete</mat-icon>
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
 
-      </table>
-      <!-- Paginator -->
-      <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
-      </mat-paginator>
+        </table>
+        <!-- Paginator -->
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<ng-template #dialogTemplate>
+  <h2 mat-dialog-title>Formulario de Apartamento</h2>
+  <mat-dialog-content class="blue_theme">
+
+    <div class="row">
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="f-w-600 m-b-8 d-block">Piso</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="apartamento.piso" matInput type="number" />
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6">
+        <!-- input -->
+        <mat-label class="f-w-600 m-b-8 d-block">Letra</mat-label>
+        <mat-form-field appearance="outline" class="w-100" color="primary">
+          <input [(ngModel)]="apartamento.letra" matInput />
+        </mat-form-field>
+      </div>
     </div>
 
-  </mat-card-content>
-</mat-card>
+    <div class="row">
+
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="w-100">
+          <input type="text" placeholder="Selecciona un usuario" aria-label="Usuario" matInput
+            [formControl]="search_user " [matAutocomplete]="auto" />
+          <mat-autocomplete [displayWith]="(displayUser)" #auto="matAutocomplete"
+            (optionSelected)="onSelect($event.option.value)">
+            @for (user of copy_usuarios; track user.id) {
+            <mat-option [value]="user">
+              <div class="d-flex align-items-center justify-content-center gap-2">
+                <span>{{ user.nombre }}</span>
+              </div>
+            </mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+
+
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions class="blue_theme" align="end">
+    <button mat-flat-button class="warning-btn">
+      refrescar
+    </button>
+    <button (click)="dialogRef.close(this.dialogTemplate);" mat-flat-button class="danger-btn">
+      cancelar
+    </button>
+    <button mat-flat-button (click)="guardar()" color="primary" matBadgeColor="accent">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+</ng-template>
 
 <app-loading [loading]="loading"></app-loading>

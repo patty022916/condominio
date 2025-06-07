@@ -8,12 +8,31 @@
 
       <div class="table-responsive">
         <!-- Filtrado de la tabla -->
-        <div class="row">
-          <!-- <div class="col-lg-6">
+        <div class="row m-t-20">
+          <div class="col-lg-6">
+            <!-- input -->
+            <mat-label class="f-w-600 m-b-8 d-block">Filtrar</mat-label>
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input (keyup)="filtro($event)" matNativeControl type="search" />
+              <input   matNativeControl type="search" />
             </mat-form-field>
-          </div> -->
+          </div>
+          <div class="col-3">
+            <mat-label class="f-w-600 m-b-8 d-block">Fecha desde</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput [matDatepicker]="picker1" />
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-3">
+            <mat-label class="f-w-600 m-b-8 d-block">Fecha hasta</mat-label>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput [matDatepicker]="picker2" />
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
         </div>
         <table mat-table [dataSource]="dataSource" class="w-100 ">
           <!-- Position Column -->
@@ -245,7 +264,7 @@
     <button (click)="dialogRef.close(this.dialogTemplate);" mat-flat-button class="danger-btn">
       cancelar
     </button>
-    <button  (click)="guardar()" mat-flat-button color="primary" matBadgeColor="accent">
+    <button (click)="guardar()" mat-flat-button color="primary" matBadgeColor="accent">
       Guardar
     </button>
   </mat-dialog-actions>
