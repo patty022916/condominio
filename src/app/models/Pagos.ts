@@ -18,3 +18,13 @@ export class Pago {
 
 export type EstatusPago = 'pendiente' | 'pagado'
 export type FormaPago = 'parcial' | 'completo'
+
+export class Compra {
+    id: number = 0
+    referencia:number = 0
+    monto: number = 0
+    fecha_compra: Date = new Date()
+    servicio: ServicioIngreso = 'antena'
+}
+
+export type ServicioIngreso = 'antena'|'internet'

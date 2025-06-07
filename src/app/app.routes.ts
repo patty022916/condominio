@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
 import { authGuard } from './guards/auth.guard';
+import { BienvenidaComponent } from './components-form/bienvenida/bienvenida.component';
 
 export const routes: Routes = [
   // Rutas protegidas
@@ -34,9 +35,14 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'home',
+    component: BienvenidaComponent,
+  },
 
   // Rutas públicas (login, register, etc.)
   {
+
     path: '',
     component: BlankComponent,
     children: [

@@ -6,3 +6,29 @@ body {
     margin: 0;
 }
 
+.img-banner {
+    position: relative;
+    /* clave para posicionar elementos hijos con absolute */
+    background-image: url('/assets/images/logos/principal.png');
+    background-size: contain;
+    /* muestra toda la imagen sin recorte */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #ffffff;
+    /* opcional: para fondo blanco donde no haya imagen */
+
+    height: 100vh;
+
+}
+
+.btn-ingresar {
+    position: absolute;
+    /* importante para moverse dentro de .img-banner */
+    bottom: -100%;
+    left: 100%;
+    /* posición relativa al ancho de la caja */
+    transform: translate(-110%,-200%);
+    /* centra horizontalmente */
+    width: 300px;
+    z-index: 2;
+}

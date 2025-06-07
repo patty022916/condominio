@@ -73,7 +73,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Atrasados',
     iconName: 'clock',
-    route: '',
+    route: '/pagos-atrasados',
     key_module: 'general_finances'
   },
   {
@@ -91,7 +91,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Divisas',
     iconName: 'globe',
-    route: '',
+    route: '/compra-divisas',
     key_module: 'general_finances'
   },
   {

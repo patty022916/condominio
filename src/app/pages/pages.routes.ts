@@ -10,6 +10,8 @@ import { CoutasComponent } from '../components-form/coutas/coutas.component';
 import { StaticsComponent } from '../components-form/statics/statics.component';
 import { PagosComponent } from '../components-form/pagos/pagos.component';
 import { ValidatePagosComponent } from '../components-form/validate-pagos/validate-pagos.component';
+import { PagosAtrasadosComponent } from '../components-form/pagos-atrasados/pagos-atrasados.component';
+import { CompraDivisasComponent } from '../components-form/compra-divisas/compra-divisas.component';
 
 export const PagesRoutes: Routes = [
   { path: 'dashboard', component: StaticsComponent },
@@ -22,6 +24,8 @@ export const PagesRoutes: Routes = [
   { path: 'cuotas', component: CoutasComponent },
   { path: 'pagos', component: PagosComponent, data: { tipo: 'general' } },
   { path: 'pagos-personales', component: PagosComponent, data: { tipo: 'personal' } },
-  { path: 'validar-pagos', component: ValidatePagosComponent }
-
+  { path: 'validar-pagos', component: ValidatePagosComponent },
+  { path: 'pagos-atrasados', component: PagosAtrasadosComponent, data: { tipo: 'general' } },
+  { path: 'pagos-atrasados-personales', component: PagosAtrasadosComponent, data: { tipo: 'personal' } },
+  { path: 'compra-divisas', component: CompraDivisasComponent }
 ];

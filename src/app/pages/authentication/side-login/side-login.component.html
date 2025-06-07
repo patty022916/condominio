@@ -40,22 +40,22 @@
               <input [(ngModel)]="login.email" matInput />
             </mat-form-field>
 
-             
-              <!-- Label -->
-              <mat-label class="f-w-600 m-b-8 d-block">Contraseña</mat-label>
-              <!-- Campo con ojito -->
-              <mat-form-field appearance="outline" class="w-100" color="primary">
-                <input matInput [(ngModel)]="login.password" [type]="hide ? 'password' : 'text'" />
-                <button mat-icon-button matSuffix (click)="hide = !hide"
-                  [attr.aria-label]="'Mostrar u ocultar contraseña'" [attr.aria-pressed]="!hide">
-                  <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-                </button>
-              </mat-form-field>
-             
+
+            <!-- Label -->
+            <mat-label class="f-w-600 m-b-8 d-block">Contraseña</mat-label>
+            <!-- Campo con ojito -->
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input matInput [(ngModel)]="login.password" [type]="hide ? 'password' : 'text'" />
+              <button mat-icon-button matSuffix (click)="hide = !hide"
+                [attr.aria-label]="'Mostrar u ocultar contraseña'" [attr.aria-pressed]="!hide">
+                <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </mat-form-field>
+
 
             <div class="d-flex align-items-center m-b-12">
               <mat-checkbox [(ngModel)]="remember_password" color="primary">Recordar contraseña</mat-checkbox>
-              <a [routerLink]="['/']" class="text-primary f-w-600 text-decoration-none m-l-auto f-s-14">olvide mi
+              <a [routerLink]="['/remember']" class="text-primary f-w-600 text-decoration-none m-l-auto f-s-14">olvide mi
                 contraseña</a>
             </div>
             <a (click)="submit()" mat-flat-button color="primary" class="w-100">
@@ -65,7 +65,6 @@
           </div>
 
           <div class="text-center m-y-10">
-            <p class="text-primary f-s-14 m-0">+58 0412-0811588</p>
             <p class="text-primary f-s-14 m-0"> Avenida principal de los cortijos. Parque residencial la viña Maturin,
               Estado Monagas</p>
           </div>

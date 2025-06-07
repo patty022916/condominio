@@ -1,0 +1,144 @@
+<app-buttons-header (addEvent)="openModal()"></app-buttons-header>
+
+<section class="main-form">
+	<mat-card>
+		<mat-card-content>
+			<mat-card-title>Listado de Compras </mat-card-title>
+
+			<div class="table-responsive">
+				<!-- Filtrado de la tabla -->
+				<div class="row">
+					<!-- <div class="col-lg-6">
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <input (keyup)="filtro($event)" matNativeControl type="search" />
+            </mat-form-field>
+          </div> -->
+				</div>
+				<table mat-table [dataSource]="dataSource" class="w-100 ">
+					<!-- Position Column -->
+					<ng-container matColumnDef="servicio">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+							<b>servicio</b>
+						</th>
+						<td mat-cell *matCellDef="let value" class="p-l-0">
+							<h6 class="f-s-14 f-w-500">
+								{{ value.servicio|titlecase }}
+							</h6>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="referencia">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+							<b>referencia</b>
+						</th>
+						<td mat-cell *matCellDef="let value" class="p-l-0">
+							<h6 class="f-s-14 f-w-500">
+								{{ value.referencia }}
+							</h6>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="monto">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+							<b>monto</b>
+						</th>
+						<td mat-cell *matCellDef="let value" class="p-l-0">
+							<h6 class="f-s-14 f-w-500">
+								{{ value.monto }} $
+							</h6>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="fecha_compra">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-15 p-l-0">
+							<b>Fecha de compra</b>
+						</th>
+						<td mat-cell *matCellDef="let value" class="p-l-0">
+							<h6 class="f-s-14 f-w-500">
+								{{ value.fecha_compra|date:'dd/MM/yyyy' }}
+							</h6>
+						</td>
+					</ng-container>
+
+					<tr mat-header-row *matHeaderRowDef="columnas"></tr>
+					<tr mat-row *matRowDef="let row; columns: columnas"></tr>
+					<!-- Symbol Column -->
+					<ng-container matColumnDef="budget">
+						<th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+
+						<td mat-cell *matCellDef="let element">
+							<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+								<mat-icon>more_vert</mat-icon>
+							</button>
+							<mat-menu #menu="matMenu">
+								<button (click)="openModal(element)" mat-menu-item>
+									<mat-icon>edit</mat-icon>
+									<span>Editar</span>
+								</button>
+								<button (click)="eliminar(element.id)" mat-menu-item>
+									<mat-icon>delete</mat-icon>
+									<span>Eliminar</span>
+								</button>
+							</mat-menu>
+						</td>
+					</ng-container>
+
+				</table>
+				<!-- Paginator -->
+				<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+			</div>
+		</mat-card-content>
+	</mat-card>
+</section>
+
+<ng-template #dialogTemplate>
+	<h2 mat-dialog-title>Compra de divisas</h2>
+	<mat-dialog-content class="blue_theme">
+
+		<div class="row m-t-20">
+			<div class="col-lg-6">
+				<mat-label class="f-w-600 m-b-8 d-block">Servicio</mat-label>
+				<mat-form-field appearance="outline" class="w-100">
+					<mat-select [(value)]="compra.servicio">
+						@for(option of servicios; track option.key) {
+						<mat-option [value]="option.key">{{
+							option.nombre
+							}}</mat-option>
+						}
+					</mat-select>
+				</mat-form-field>
+			</div>
+
+			<div class="col-lg-6">
+				<mat-label class="f-w-600 m-b-8 d-block">Monto (USD)</mat-label>
+				<mat-form-field appearance="outline" class="w-100" color="primary">
+					<input [(ngModel)]="compra.monto" matInput type="number" placeholder="300" />
+				</mat-form-field>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<mat-label class="f-w-600 m-b-8 d-block">Referencia</mat-label>
+				<mat-form-field appearance="outline" class="w-100" color="primary">
+					<input [(ngModel)]="compra.referencia" matInput type="number" placeholder="300" />
+				</mat-form-field>
+			</div>
+		</div>
+
+	</mat-dialog-content>
+	<mat-dialog-actions class="blue_theme" align="end">
+		<button (click)="refrescarCompra()" mat-flat-button class="warning-btn">
+			refrescar
+		</button>
+		<button (click)="dialogRef.close(this.dialogTemplate);" mat-flat-button class="danger-btn">
+			cancelar
+		</button>
+		<button mat-flat-button (click)="guardar()" color="primary" matBadgeColor="accent">
+			Guardar
+		</button>
+	</mat-dialog-actions>
+</ng-template>
+
+<app-loading [loading]="loading"></app-loading>

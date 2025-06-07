@@ -1,4 +1,4 @@
-import { Pago } from "../models/Pagos";
+import { Compra, Pago } from "../models/Pagos";
 
 export const PAY_LIST: Pago[] = [
     {
@@ -70,5 +70,30 @@ export const PAY_LIST: Pago[] = [
         status: 'pagado',
         forma_pago: 'completo',
         fecha_pago: new Date()
+    }
+]
+
+
+export const COMPRAS_LIST: Compra[] = [
+    {
+        id: 1,
+        referencia: 123456,
+        monto: 1000,
+        fecha_compra: new Date(),
+        servicio: 'antena'
+    },
+    {
+        id: 2,
+        referencia: 789012,
+        monto: 2000,
+        fecha_compra: new Date(),
+        servicio: 'antena'
+    },
+    {
+        id: 3,
+        referencia: 345678,
+        monto: 3000,
+        fecha_compra: new Date(),
+        servicio: 'internet'
     }
 ]
