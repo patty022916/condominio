@@ -80,20 +80,26 @@ export const COMPRAS_LIST: Compra[] = [
         referencia: 123456,
         monto: 1000,
         fecha_compra: new Date(),
-        servicio: 'antena'
+        servicio: 'antena',
+        movimiento: 'ingreso',
+        moneda: 'usd'
     },
     {
         id: 2,
         referencia: 789012,
         monto: 2000,
         fecha_compra: new Date(),
-        servicio: 'antena'
+        servicio: 'divisas',
+        movimiento: 'egreso',
+        moneda: 'usd'
     },
     {
         id: 3,
         referencia: 345678,
         monto: 3000,
         fecha_compra: new Date(),
-        servicio: 'internet'
+        servicio: 'antena',
+        movimiento: 'egreso',
+        moneda: 'usd'
     }
 ]

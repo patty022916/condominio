@@ -89,7 +89,7 @@ export const navItems: NavItem[] = [
     key_module: 'general_finances'
   },
   {
-    displayName: 'Divisas',
+    displayName: 'Movimientos',
     iconName: 'globe',
     route: '/compra-divisas',
     key_module: 'general_finances'

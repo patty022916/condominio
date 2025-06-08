@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material.module';
 import { ButtonsHeaderComponent } from "../buttons-header/buttons-header.component";
 import { LoadingComponent } from "../loading/loading.component";
-import { Compra, Pago, ServicioIngreso } from 'src/app/models/Pagos';
+import { Compra, Movimiento, Pago, ServicioIngreso } from 'src/app/models/Pagos';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -37,11 +37,22 @@ export class CompraDivisasComponent {
 
   servicios: { key: ServicioIngreso, nombre: string }[] = [
     { key: 'antena', nombre: 'Antena' },
-    { key: 'internet', nombre: 'Internet' }
+    { key: 'internet', nombre: 'Internet' },
+    { key: 'divisas', nombre: 'Divisas' }
+  ]
+
+  movimientos: { key: Movimiento, nombre: string }[] = [
+    { key: 'egreso', nombre: 'Egreso' },
+    { key: 'ingreso', nombre: 'Ingreso' }
+  ]
+  monedas: { key: string, nombre: string }[] = [
+    { key: 'usd', nombre: 'USD' },
+    { key: 'bs', nombre: 'Bs' }
   ]
 
   columnas: string[] = [
     'servicio',
+    'movimiento',
     'monto',
     'fecha_compra',
     'budget'
