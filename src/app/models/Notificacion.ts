@@ -9,8 +9,6 @@ export class NotificationUser {
     created_at: string = ''
     piso: string = ''
     letra: string = ''
-
-
 }
 
 export type TypeNotification = 'cobro' | 'reunion' | 'alerta' | 'general'
