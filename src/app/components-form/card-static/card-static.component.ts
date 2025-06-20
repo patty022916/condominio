@@ -1,6 +1,6 @@
 import { M } from '@angular/cdk/keycodes';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CardStatic } from 'src/app/interfaces/CardStaticPanel';
 
@@ -15,6 +15,8 @@ import { CardStatic } from 'src/app/interfaces/CardStaticPanel';
 })
 export class CardStaticComponent {
   @Input() card_static: CardStatic
+  @Input() mode_card_static: boolean = true
+  @Output() touchCard = new EventEmitter<CardStatic>()
 
   opacityColor(hex: string, amount: number = 0.9): string {
     // El parámetro `amount` indica cuánto aclarar (0.0 a 1.0)

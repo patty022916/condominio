@@ -1,0 +1,72 @@
+<section class="main-form">
+  <div class="row">
+    <div class="col-8">
+
+      <p class="f-s-20 f-w-600 p-b-10">Generar reporte</p>
+
+      @for (cards of cards_reports; track $index) {
+      <div class="row m-t-20">
+        @for (card of cards; track $index) {
+        <app-card-static (touchCard)="selectCard($event)" class="col-12" [mode_card_static]="false"
+          [card_static]="card"></app-card-static>
+        }
+      </div>
+      }
+
+    </div>
+    <!-- Carta 2 -->
+    <div class="col-4">
+      <p class="f-s-20 f-w-600 p-b-20">Configuración</p>
+
+      <p class="f-s-20 f-w-800 text-primary">{{cardStatic.title}}</p>
+      @if (cardStatic.id != 3 && cardStatic.id != 1) {
+      <div class="row ">
+        <div class="col-6">
+          <mat-label class="f-w-600 m-b-8 d-block">Fecha desde</mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input [(ngModel)]="configuration.date_start" matInput [matDatepicker]="picker1" />
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="col-6">
+          <mat-label class="f-w-600 m-b-8 d-block">Fecha hasta</mat-label>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <input [(ngModel)]="configuration.date_end" matInput [matDatepicker]="picker2" />
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      }
+
+      <div class="row">
+        <div class="col-12">
+          <!-- [(value)]="compra.moneda" -->
+          <mat-label class="f-w-600 m-b-8 d-block">Formato</mat-label>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-select [(value)]="configuration.type_formate">
+              @for(option of formatos; track option.key) {
+              <mat-option [value]="option.key">{{
+                option.nombre
+                }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <button (click)="generarReporte()" class="w-100" mat-flat-button color="primary" matBadgeColor="accent">
+            <mat-icon>download</mat-icon>
+            Descargar
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<app-loading [loading]="loading"></app-loading>

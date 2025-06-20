@@ -12,6 +12,7 @@ import { PagosComponent } from '../components-form/pagos/pagos.component';
 import { ValidatePagosComponent } from '../components-form/validate-pagos/validate-pagos.component';
 import { PagosAtrasadosComponent } from '../components-form/pagos-atrasados/pagos-atrasados.component';
 import { CompraDivisasComponent } from '../components-form/compra-divisas/compra-divisas.component';
+import { ReportesComponent } from '../components-form/reportes/reportes.component';
 
 export const PagesRoutes: Routes = [
   { path: 'dashboard', component: StaticsComponent },
@@ -27,5 +28,6 @@ export const PagesRoutes: Routes = [
   { path: 'validar-pagos', component: ValidatePagosComponent },
   { path: 'pagos-atrasados', component: PagosAtrasadosComponent, data: { tipo: 'general' } },
   { path: 'pagos-atrasados-personales', component: PagosAtrasadosComponent, data: { tipo: 'personal' } },
-  { path: 'compra-divisas', component: CompraDivisasComponent }
+  { path: 'compra-divisas', component: CompraDivisasComponent },
+  { path: 'reportes', component: ReportesComponent }
 ];

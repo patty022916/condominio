@@ -117,7 +117,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Reportes',
     iconName: 'file-text',
-    route: '',
+    route: '/reportes',
     key_module: 'community'
   },
 
