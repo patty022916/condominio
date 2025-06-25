@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, TemplateRef, ViewChild } from '@angular/core';
 import { LoadingComponent } from "../loading/loading.component";
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material.module';
@@ -20,7 +20,6 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
     MaterialModule,
     LoadingComponent,
     FormsModule,
-    ButtonsHeaderComponent,
     ReactiveFormsModule
   ],
   templateUrl: './apartamentos.component.html',
@@ -117,25 +116,86 @@ export class ApartamentosComponent {
 
   openModal(element?: Apartamentos) {
     if (element) {
+      this.removeUserSelect()
       this.apartamento = { ...element }
+
+      let usuario = this.usuarios.find(u => u.id == this.apartamento.inquilino_id) as Usuario
+      
+      if (usuario) {
+        this.apartamento.inquilino_id = usuario.id
+        this.search_user.setValue(usuario as any)
+
+      }
     } else {
       this.apartamento = new Apartamentos()
     }
     this.dialogRef = this.dialog.open(this.dialogTemplate);
   }
 
+  /**
+   *Remueve el usuario del autocomplete
+   *
+   * @memberof ApartamentosComponent
+   */
+  removeUserSelect() {
+    this.apartamento.inquilino_id = null
+    this.search_user.setValue('')
+  }
+
   guardar() {
-    this.toastService.show('Apartamento guardado con éxito');
-    this.dialogRef.close();
+
+    let { inquilino_id, id } = this.apartamento
+    
+    //validamos inquilino repetido
+    let inquilinos_repetidos = this.dataSource.data.filter(apt => apt.inquilino_id == inquilino_id)
+
+    if (inquilinos_repetidos.length > 0) return this.toastService.show('El inquilino ya tiene un apartamento asignado')
+
+    this.loading = true
+    this.apartamentosService.asignarInquilino(inquilino_id as number, id).subscribe({
+      next: (apartamento) => {
+        this.toastService.show('Inquilino asignado correctamente')
+        this.dataSource.data = this.dataSource.data.map(apart => apart.id === id ? apartamento : apart)
+        this.dialogRef.close()
+
+        //limpiar select
+        this.removeUserSelect()
+        this.loading = false
+      },
+      error: (err) => {
+        this.loading = false
+        this.toastService.show(err.error.error)
+      },
+    })
   }
   displayUser(user: Usuario): string {
-    return user?.nombre || '';
+    return user.nombre;
   }
+
   onSelect(user: Usuario) {
 
-    if (user.id == 2) this.apartamento.inquilino_id = user.id;
-    if (user.id == 3) this.apartamento.propietario_id = user.id;
+    const rolAsignado: { idField: string, nameField: string } = {
+      2: {
+        idField: 'propietario_id',
+        nameField: 'propietario',
+      },
+      3: {
+        idField: 'inquilino_id',
+        nameField: 'inquilino',
+      },
+    }[user.id_rol] as { idField: string, nameField: string };
 
 
+    if (rolAsignado) {
+      const { idField, nameField } = rolAsignado;
+      if (user.id_rol == 2 || this.apartamento.inquilino_id == user.id) {
+        this.removeUserSelect()
+        return this.toastService.show(`El apartamento ya tiene asignado a ${user.nombre} como ${user.cargo}`);
+      }
+
+      (this.apartamento as any)[idField] = user.id;
+      (this.apartamento as any)[nameField] = user.nombre;
+
+    }
   }
 }
