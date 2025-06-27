@@ -23,4 +23,7 @@ export class ReportesService {
   gastos(configuration: ReportConfiguration): Observable<Blob> {
     return this.http.post(`${environment.host}/reporte/gastos`, configuration, { responseType: 'blob' });
   }
-}
+  morosos(): Observable<Blob> {
+    return this.http.get(`${environment.host}/reporte/morosos`, { responseType: 'blob' });
+  }
+}  

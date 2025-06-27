@@ -59,6 +59,16 @@ export class ReportesComponent {
         color: '#34495e',
         icon: 'apartment'
       }
+    ],
+    [
+      {
+        id: 4,
+        title: 'Morosos',
+        contend: 'Reporte de todos los morosos del sistema',
+        info: '',
+        color: '#e59866',
+        icon: 'person'
+      }
     ]
   ]
   cardStatic: CardStatic = this.cards_reports[0][0]
@@ -82,7 +92,8 @@ export class ReportesComponent {
     let reportes: { [key: string]: () => void } = {
       '1': this.reporteNominaProveedores.bind(this),
       '2': this.gastos.bind(this),
-      '3': this.reporteApartamentos.bind(this)
+      '3': this.reporteApartamentos.bind(this),
+      '4': this.reporteMorosos.bind(this)
     };
 
     reportes[(this.cardStatic.id as number).toString()]();
@@ -131,6 +142,20 @@ export class ReportesComponent {
   reporteNominaProveedores() {
     this.loading = true
     this.reportesService.nominaProveedores().subscribe({
+      next: (blob) => {
+        this.descargarPdf(blob, 'reporte_nomina')
+        this.toastService.show('Reporte descargado correctamente')
+        this.loading = false
+      },
+      error: (err) => {
+        this.loading = false
+        this.toastService.show(err.error)
+      }
+    })
+  }
+  reporteMorosos() {
+    this.loading = true
+    this.reportesService.morosos().subscribe({
       next: (blob) => {
         this.descargarPdf(blob, 'reporte_nomina')
         this.toastService.show('Reporte descargado correctamente')
