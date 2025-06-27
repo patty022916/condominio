@@ -69,6 +69,16 @@ export class ReportesComponent {
         color: '#e59866',
         icon: 'person'
       }
+    ],
+    [
+      {
+        id: 5,
+        title: 'Deudas Personales',
+        contend: 'Reporte de deudas personales del sistema',
+        info: '',
+        color: '#f1c40f',
+        icon: 'person'
+      }
     ]
   ]
   cardStatic: CardStatic = this.cards_reports[0][0]
@@ -93,7 +103,8 @@ export class ReportesComponent {
       '1': this.reporteNominaProveedores.bind(this),
       '2': this.gastos.bind(this),
       '3': this.reporteApartamentos.bind(this),
-      '4': this.reporteMorosos.bind(this)
+      '4': this.reporteMorosos.bind(this),
+      '5': this.reportePersonales.bind(this)
     };
 
     reportes[(this.cardStatic.id as number).toString()]();
@@ -109,6 +120,20 @@ export class ReportesComponent {
     this.reportesService.reporteApartamentos().subscribe({
       next: (blob) => {
         this.descargarPdf(blob, 'reporte_apartamentos')
+        this.toastService.show('Reporte descargado correctamente')
+        this.loading = false
+      },
+      error: (err) => {
+        this.loading = false
+        this.toastService.show(err.error)
+      }
+    })
+  }
+  reportePersonales() {
+    this.loading = true
+    this.reportesService.morososPersonal().subscribe({
+      next: (blob) => {
+        this.descargarPdf(blob, 'reporte_deudas_personales')
         this.toastService.show('Reporte descargado correctamente')
         this.loading = false
       },
@@ -157,7 +182,7 @@ export class ReportesComponent {
     this.loading = true
     this.reportesService.morosos().subscribe({
       next: (blob) => {
-        this.descargarPdf(blob, 'reporte_nomina')
+        this.descargarPdf(blob, 'reporte_morosos')
         this.toastService.show('Reporte descargado correctamente')
         this.loading = false
       },

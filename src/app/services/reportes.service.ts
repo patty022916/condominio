@@ -26,4 +26,8 @@ export class ReportesService {
   morosos(): Observable<Blob> {
     return this.http.get(`${environment.host}/reporte/morosos`, { responseType: 'blob' });
   }
+
+  morososPersonal(): Observable<Blob> {
+    return this.http.get(`${environment.host}/reporte/morosos-personal`, { responseType: 'blob' });
+  }
 }  
