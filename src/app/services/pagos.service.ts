@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Pago } from '../models/Pagos';
 import { Observable } from 'rxjs';
 import { PAY_LIST } from './data_list';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../environment/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,26 +11,24 @@ import { PAY_LIST } from './data_list';
 export class PagosService {
 
   pagos_list: Pago[] = PAY_LIST
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  createPaymentByUser(pago: Pago): Observable<Pago> {
-    return new Observable((observer) => {
-      observer.next(pago);
-      observer.complete();
-    });
-  }
-  createPaymentByCondominium(pago: Pago): Observable<Pago> {
-    return new Observable((observer) => {
-      observer.next(pago);
-      observer.complete();
-    });
+  /**
+   *Pago realizado por el usuario
+   *
+   * @param {FormData} sale
+   * @return {*}  {Observable<Pago>}
+   * @memberof PagosService
+   */
+  createUserPayment(sale: FormData): Observable<Pago> {
+    return this.http.post<Pago>(`${environment.host}/pago-usuario`, sale);
   }
 
-  listPayments(): Observable<Pago[]> {
-    return new Observable((observer) => {
-      observer.next(this.pagos_list);
-      observer.complete();
-    });
+
+  listPayments(id_user: number | null = null): Observable<Pago[]> {
+    return this.http.get<Pago[]>(`${environment.host}/pago-usuario/${id_user}`);
   }
 
 }

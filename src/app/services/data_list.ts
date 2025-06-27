@@ -4,6 +4,7 @@ export const PAY_LIST: Pago[] = [
     {
         id: 1,
         id_apartamento: 1,
+        referencia: 8348,
         apartamento: '7A',
         nombre_usuario: 'Francisco Santana',
         nombre_cuota: 'Cuota 1',
@@ -18,6 +19,7 @@ export const PAY_LIST: Pago[] = [
     {
         id: 2,
         id_apartamento: 2,
+        referencia: 8348,
         apartamento: '3A',
         nombre_usuario: 'Carlos Gomez',
         nombre_cuota: 'Cuota 2',
@@ -32,6 +34,7 @@ export const PAY_LIST: Pago[] = [
     {
         id: 4,
         id_apartamento: 3,
+        referencia: 8348,
         apartamento: '3A',
         nombre_usuario: 'Patricia Gomez',
         nombre_cuota: 'Cuota 3',
@@ -46,6 +49,7 @@ export const PAY_LIST: Pago[] = [
     {
         id: 4,
         id_apartamento: 3,
+        referencia: 8348,
         apartamento: '7B',
         nombre_usuario: 'Patricia Gomez',
         nombre_cuota: 'Cuota 3',
@@ -61,6 +65,7 @@ export const PAY_LIST: Pago[] = [
         id: 5,
         id_apartamento: 3,
         apartamento: '7A',
+        referencia: 8348,
         nombre_usuario: 'Carlos Gomez',
         nombre_cuota: 'Cuota 3',
         id_usuario: 3,

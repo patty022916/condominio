@@ -16,6 +16,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { PagosService } from 'src/app/services/pagos.service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-pagos',
@@ -32,12 +33,17 @@ import { PagosService } from 'src/app/services/pagos.service';
 export class PagosComponent {
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator
+
+  //Compos de la imagen
+  selectedFile: File | null = null;
+  preview: string | ArrayBuffer | null = null;
+
   loading: boolean = false;
   mode_component: 'general' | 'personal' = 'general';
 
 
   pago: Pago = new Pago()
-  usuarios: Usuario = new Usuario()
+  usuario: Usuario = new Usuario()
   pagos: Pago[] = []
 
   dataSource = new MatTableDataSource<Pago>(this.pagos);
@@ -51,13 +57,13 @@ export class PagosComponent {
   cuota: Cuota = new Cuota()
 
   columnas: string[] = [
-    'nombre_usuario',
+    'nombre',
     'apartamento',
-    'monto',
-    'url',
-    'status',
     'forma_pago',
-    'fecha_pago'
+    'monto',
+    'referencia',
+    'status',
+    'created_at',
   ];
 
   constructor(
@@ -75,17 +81,17 @@ export class PagosComponent {
   ngOnInit() {
     //capturamos de donde se esta llamando al componente
     this.mode_component = this.route.snapshot.data['tipo'];
-    this.usuarios = JSON.parse(sessionStorage.getItem('user') as string);
+    this.usuario = JSON.parse(sessionStorage.getItem('user') as string);
 
     if (this.mode_component == 'personal')
-      this.generarCuotaPorUsuario(this.usuarios.id)
+      this.generarCuotaPorUsuario(this.usuario.id)
 
-    this.listarPagos()
+    this.listarPagos(this.usuario.id)
   }
 
-  listarPagos() {
+  listarPagos(usuario_id: number | null = null) {
     this.loading = true
-    this.pagosService.listPayments().subscribe({
+    this.pagosService.listPayments(usuario_id).subscribe({
       next: (pagos) => {
         this.dataSource.data = pagos
         this.loading = false
@@ -142,10 +148,28 @@ export class PagosComponent {
   }
 
   guardar() {
+    //agregamos el form data
+    const formData = new FormData();
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
+
+    //todo ojo solo aplica para los usuarios propietarios o inquilino, para condominio id_apartamento es null
+    //*extraemos datos de la cuota y usuarios
+    let { id: id_usuario, id_apartamento } = this.usuario as unknown as Pago
+    let { id: id_cuota } = this.cuota
+
+
+    this.pago = { ...this.pago, id_usuario, id_apartamento, id_cuota }
+
+    formData.append('pago_usuario', JSON.stringify(this.pago));
     this.loading = true
-    this.pagosService.createPaymentByCondominium(this.pago).subscribe({
+
+
+    //!ESTE PAGO ES SOLO PARA USUARIOS, RECORDAR ADAPTAR UNO PARA CONDOMINIOS
+    this.pagosService.createUserPayment(formData).subscribe({
       next: (pago) => {
-        this.dataSource.data = [pago, ...this.dataSource.data];
+        console.log(pago);
         this.loading = false
         this.toastService.show('Pago registrado exitosamente')
         this.dialogRef.close()
@@ -156,5 +180,29 @@ export class PagosComponent {
         this.toastService.show(err.error.error);
       }
     })
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.preview = reader.result;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+
+  validarPagoMaximo() {
+
+    let { total_bs } = this.cuota.cuotas[0]
+
+    if (this.pago.monto > total_bs) {
+      this.pago.monto = 0
+      this.toastService.show('El monto es mayor al total de la cuota')
+    }
   }
 }
