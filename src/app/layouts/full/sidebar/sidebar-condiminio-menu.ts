@@ -82,12 +82,12 @@ export const navItems: NavItem[] = [
     route: '/validar-pagos',
     key_module: 'general_finances'
   },
-  {
-    displayName: 'Pagos',
-    iconName: 'wallet',
-    route: '/pagos',
-    key_module: 'general_finances'
-  },
+  // {
+  //   displayName: 'Pagos',
+  //   iconName: 'wallet',
+  //   route: '/pagos',
+  //   key_module: 'general_finances'
+  // },
   {
     displayName: 'Movimientos',
     iconName: 'globe',

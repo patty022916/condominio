@@ -22,13 +22,17 @@ export class PagosService {
    * @return {*}  {Observable<Pago>}
    * @memberof PagosService
    */
-  createUserPayment(sale: FormData): Observable<Pago> {
-    return this.http.post<Pago>(`${environment.host}/pago-usuario`, sale);
+  createUserPayment(sale: FormData): Observable<{pago_usuario: Pago}> {
+    return this.http.post<{pago_usuario: Pago}>(`${environment.host}/pago-usuario`, sale);
   }
 
 
-  listPayments(id_user: number | null = null): Observable<Pago[]> {
+  listPayments(id_user: number | string = ''): Observable<Pago[]> {
     return this.http.get<Pago[]>(`${environment.host}/pago-usuario/${id_user}`);
   }
 
+  validatePaymentProcess(pago: Pago): Observable<Pago> {
+    let { id: pago_id, status } = pago
+    return this.http.put<Pago>(`${environment.host}/pago-usuario/validar`, { pago_id, status });
+  }
 }

@@ -17,6 +17,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { PagosService } from 'src/app/services/pagos.service';
 import { of } from 'rxjs';
+import { environment } from 'src/app/environment/environment';
 
 @Component({
   selector: 'app-pagos',
@@ -32,8 +33,11 @@ import { of } from 'rxjs';
 })
 export class PagosComponent {
   @ViewChild('dialogTemplate') dialogTemplate!: TemplateRef<any>;
+  @ViewChild('captureTemplate') captureTemplate!: TemplateRef<any>;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator
 
+  host_storage: string = environment.host_storage
   //Compos de la imagen
   selectedFile: File | null = null;
   preview: string | ArrayBuffer | null = null;
@@ -48,6 +52,7 @@ export class PagosComponent {
 
   dataSource = new MatTableDataSource<Pago>(this.pagos);
   dialogRef: MatDialogRef<any>;
+  captureTemplateRef: MatDialogRef<any>;
 
   forma_pago: { key: FormaPago, nombre: string }[] = [
     { key: 'completo', nombre: 'Completo' },
@@ -61,6 +66,7 @@ export class PagosComponent {
     'apartamento',
     'forma_pago',
     'monto',
+    'url',
     'referencia',
     'status',
     'created_at',
@@ -91,7 +97,7 @@ export class PagosComponent {
 
   listarPagos(usuario_id: number | null = null) {
     this.loading = true
-    this.pagosService.listPayments(usuario_id).subscribe({
+    this.pagosService.listPayments(usuario_id as number).subscribe({
       next: (pagos) => {
         this.dataSource.data = pagos
         this.loading = false
@@ -112,12 +118,12 @@ export class PagosComponent {
     this.loading = true
     this.cuotasService.generarCuotaPorUsuario(id_user).subscribe({
       next: (cuota) => {
-
         //? evalúa  solo el primer indice del arreglo
-        let { total_bs } = cuota.cuotas[0]
+
         this.cuota = cuota
-        this.pago.monto = total_bs
+        this.refrescarPago()
         this.loading = false
+
       },
       error: (err) => {
         this.loading = false
@@ -169,7 +175,8 @@ export class PagosComponent {
     //!ESTE PAGO ES SOLO PARA USUARIOS, RECORDAR ADAPTAR UNO PARA CONDOMINIOS
     this.pagosService.createUserPayment(formData).subscribe({
       next: (pago) => {
-        console.log(pago);
+
+        this.dataSource.data = [pago.pago_usuario, ...this.dataSource.data];
         this.loading = false
         this.toastService.show('Pago registrado exitosamente')
         this.dialogRef.close()
@@ -204,5 +211,9 @@ export class PagosComponent {
       this.pago.monto = 0
       this.toastService.show('El monto es mayor al total de la cuota')
     }
+  }
+
+  viewCapture(capture: Pago) {
+    this.captureTemplateRef = this.dialog.open(this.captureTemplate, { data: capture });
   }
 }
