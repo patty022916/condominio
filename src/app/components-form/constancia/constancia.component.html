@@ -1,0 +1,34 @@
+<app-buttons-header (addEvent)="openModal()"></app-buttons-header>
+
+<ng-template #dialogTemplate>
+  <h2 mat-dialog-title>Generar constancias</h2>
+  <mat-dialog-content class="blue_theme">
+
+    <div class="row">
+      <div class="col-12">
+        <mat-label class="f-w-600 m-b-8 d-block">Generar Constancia</mat-label>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-select [(value)]="constancia">
+            @for(option of constancias; track option.key) {
+            <mat-option [value]="option.key">{{
+              option.nombre
+              }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions class="blue_theme" align="end">
+
+    <button (click)="dialogRef.close(this.dialogTemplate);" mat-flat-button class="danger-btn">
+      cancelar
+    </button>
+    <button (click)="generarConstancia()" mat-flat-button color="primary" matBadgeColor="accent">
+      Generar
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+
+<app-loading [loading]="loading"></app-loading>

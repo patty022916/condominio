@@ -117,7 +117,7 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Constancias',
     iconName: 'file-text',
-    route: '/reportes',
+    route: '/constancia',
     key_module: 'community'
   },
   {
