@@ -57,14 +57,14 @@ export class StaticsComponent {
     [
       {
         title: 'Fondos USD',
-        contend: '400$',
+        contend: '400',
         info: '-5% este mes',
         color: '#27ae60',
         icon: 'attach_money'
       },
       {
-        title: 'Fondos Bs',
-        contend: '4.000bs',
+        title: 'Fondos Bolivares',
+        contend: '4.000',
         info: '+10% este mes',
         color: '#17a589',
         icon: 'attach_money'
