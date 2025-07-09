@@ -119,6 +119,9 @@ export class UsuariosComponent {
   }
 
   guardar() {
+
+    if (!this.usuario.email.includes('@')) return this.toastService.show('El correo no es valido');
+
     this.loading = true
     this.usuariosService.createDynamicUser(this.usuario).subscribe({
       next: (user) => {
@@ -158,7 +161,7 @@ export class UsuariosComponent {
     this.usuario = new Usuario()
     this.usuario.id_rol = this.cargos[2].id
   }
-  
+
   validatePhoneLength(): boolean {
     if (!this.usuario.telefono) return false;
     // Limpiamos el teléfono para que solo tenga números
